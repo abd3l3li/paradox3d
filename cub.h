@@ -40,6 +40,7 @@ typedef struct s_map
     char    **main_map;
     char    **map;
     int     map_len;
+    int     manner;
     char    *argv;
 } t_map;
 
@@ -70,7 +71,8 @@ int check_walls(t_cub *cub);
 int ft_fill_map(char *str, t_cub *cub);
 int map_alloc(t_cub *cub);
 int ft_rowlen(char **map);
-int is_map(char *line);
+int is_map(char *line, t_cub *cub);
+int not_flood_fill(t_cub *cub);
 
 
 

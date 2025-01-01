@@ -14,6 +14,7 @@ void    init_cub(t_cub *cub, char **av)
     cub->v_map->argv = av[1];
     cub->str = NULL;
     cub->fd = 0;
+    cub->v_map->manner = 4;
     cub->v_map->map_len = map_alloc(cub);
 }
 

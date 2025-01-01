@@ -1,16 +1,16 @@
 #include "../cub.h"
 
-int is_map(char *line)
+int is_map(char *line, t_cub *cub)
 {
     char *tmp;
-    static int manner;
 
-    manner = 4;
     tmp = ft_strtrim(line, " ");
-    if (manner > 0) // for making sure we skipped the first 4 texture lines
+    if (tmp[0] == '\0')
+        return (0);
+    if (cub->v_map->manner > 0) // for making sure we skipped the first 4 texture lines
     {
         if (tmp[0] == 'W' || tmp[0] == 'E' || tmp[0] == 'S' || tmp[0] == 'N')
-            return (manner--, 0);
+            return (cub->v_map->manner--, 0);
     }
     if (tmp[0] == '1' || tmp[0] == '0' || tmp[0] == 'W' 
         || tmp[0] == 'E' || tmp[0] == 'S' || tmp[0] == 'N')
@@ -30,7 +30,7 @@ int map_alloc(t_cub *cub)
         return (-1);
     while ((line = get_next_line(fd)) != NULL)
     {
-        if (is_map(line))
+        if (is_map(line, cub))
             i++;
         free(line);
     }
@@ -55,12 +55,46 @@ static int  to_be_continued(t_cub *cub, int row_len, int line_len)
     y = 0;
     while (y < row_len)
     {
-        if (cub->v_map->map[y][0] != '1')
+        if (cub->v_map->map[y][0] != '1' && cub->v_map->map[y][0] != ' ')
             return (-1);
         line_len = ft_strlen(cub->v_map->map[y]);
-        if (cub->v_map->map[y][line_len - 1] != '1')
+        if (cub->v_map->map[y][line_len - 1] != '1' && cub->v_map->map[y][line_len - 1] != ' ')
             return (-1);
         y++;
+    }
+    return (0);
+}
+
+int is_out_of_bounds(t_cub *cub, int i, int j)
+{
+    if (i == 0 || j == 0 || cub->v_map->main_map[i + 1] == NULL 
+        || cub->v_map->main_map[i][j + 1] == '\0' || j >= (int)ft_strlen(cub->v_map->main_map[i - 1])
+        || j >= (int)ft_strlen(cub->v_map->main_map[i + 1]))
+        return (-1);
+    return (0);
+}
+
+int not_flood_fill(t_cub *cub)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (cub->v_map->main_map[i])
+    {
+        j = 0;
+        while (cub->v_map->main_map[i][j])
+        {
+            if (cub->v_map->main_map[i][j] == '0')
+            {
+                if (is_out_of_bounds(cub, i, j) == -1 ||
+                    cub->v_map->main_map[i - 1][j] == ' ' || cub->v_map->main_map[i + 1][j] == ' ' 
+                    || cub->v_map->main_map[i][j - 1] == ' ' || cub->v_map->main_map[i][j + 1] == ' ')
+                    return (-1);
+            }
+            j++;
+        }
+        i++;
     }
     return (0);
 }
@@ -79,7 +113,7 @@ int check_walls(t_cub *cub)
     row_len = ft_rowlen(cub->v_map->map);
     while (x < line_len)
     {
-        if (cub->v_map->map[0][x] != '1')
+        if (cub->v_map->map[0][x] != '1' && cub->v_map->map[0][x] != ' ')
             return (-1);
         x++;
     }
@@ -87,7 +121,7 @@ int check_walls(t_cub *cub)
     line_len = ft_strlen(cub->v_map->map[row_len - 1]);
     while (x < line_len)
     {
-        if (cub->v_map->map[row_len -1][x] != '1')
+        if (cub->v_map->map[row_len -1][x] != '1' && cub->v_map->map[row_len - 1][x] != ' ')
             return (-1);
         x++;
     }
@@ -108,7 +142,8 @@ int check_elems(t_cub *cub)
         {
             if (cub->v_map->map[i][j] != '1' && cub->v_map->map[i][j] != '0' 
                 && cub->v_map->map[i][j] != 'N' && cub->v_map->map[i][j] != 'S' 
-                && cub->v_map->map[i][j] != 'E' && cub->v_map->map[i][j] != 'W')
+                && cub->v_map->map[i][j] != 'E' && cub->v_map->map[i][j] != 'W' 
+                && cub->v_map->map[i][j] != ' ')
                 return (-1);
             if (cub->v_map->map[i][j] == 'N' || cub->v_map->map[i][j] == 'S' 
                 || cub->v_map->map[i][j] == 'E' || cub->v_map->map[i][j] == 'W')
@@ -165,7 +200,9 @@ int parse_map(char *line, t_cub *cub)
     state = ft_fill_map(line, cub);
     if (state != -1)
         state = check_elems(cub);
+    // if (state != -1)
+    //     state = check_walls(cub);
     if (state != -1)
-        state = check_walls(cub);
+        state = not_flood_fill(cub);//here
     return (state);
 }
