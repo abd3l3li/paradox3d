@@ -1,4 +1,30 @@
-#include "../cub.h"
+#include "../cub_pars.h"
+
+void free_splited(char **splited)
+{
+    int i = 0;
+    while (splited[i])
+    {
+        free(splited[i]);
+        i++;
+    }
+    free(splited);
+}
+
+// char *ft_skip(t_cub *cub)
+// {
+// 	char *line;
+
+// 	line = get_next_line(cub->fd);
+// 	while (line != NULL)
+// 	{
+// 		if(!empty_line(line))
+// 			break;
+// 		free(line);
+// 		line = get_next_line(cub->fd);
+// 	}
+// 	return (line);	
+// }
 
 int	empty_line(char *line)
 {
@@ -26,6 +52,8 @@ int	extension_check(char *file)
 	i = 0;
 	while (file[i])
 		i++;
+	if (i < 5)
+		return (-1);
 	if (file[i - 1] != 'b' || file[i - 2] != 'u' 
 		|| file[i - 3] != 'c' || file[i - 4] != '.')
 		return (-1);
@@ -34,30 +62,20 @@ int	extension_check(char *file)
 
 int parse_cub(char *file, t_cub *cub)
 {
-	char *line;
-
+	cub->line = get_next_line(cub->fd);
 	if (extension_check(file) == -1)
 		return (-1);
-	if (parse_textures(cub) == -1)
+	if (parse_texture_color(cub) == -1)
 		return (-1);
-	while ((line = get_next_line(cub->fd)) != NULL)
-	{
-		if(!empty_line(line))
-			break;
-	}
-	if (parse_color(line, cub) == -1)
+	if (parse_map(cub) == -1)
 		return (-1);
-	while ((line = get_next_line(cub->fd)) != NULL)
+	//cub->line = get_next_line(cub->fd);
+	while (cub->line)
 	{
-		if(!empty_line(line))
-			break;
+		if(!empty_line(cub->line))
+			return (free(cub->line), -1);
+		cub->line = get_next_line(cub->fd);
 	}
-	if (parse_map(line, cub) == -1)
-		return (-1);
-	while ((line = get_next_line(cub->fd)) != NULL)
-	{
-		if(!empty_line(line))
-			return (-1);
-	}
+	free(cub->line);//recheck
     return (0);
 }

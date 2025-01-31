@@ -6,9 +6,12 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:06:17 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/01/31 21:18:11 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/01/31 22:25:52 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef CUBE_3D_H
+#define CUBE_3D_H
 
 #include <math.h>
 #include <mlx.h>
@@ -88,9 +91,9 @@ typedef struct s_distance
 	float		step;
 }				t_distance;
 
-void			draw_cube(t_cube *cube, int pos_x, int pos_y, int color);
 void			cube_render(t_cube *cube);
 int				close_window(t_cube *cube);
-int				shift(int key, t_cube *cube);
 void			event_init(t_cube *cube);
 void			put_pixel_to_image(int x, int y, int color, t_cube *cube);
+
+#endif

@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = #-g -Wall -Wextra -Werror
 RM = rm -rf
 
 BOLD      = \033[1m
@@ -9,8 +9,9 @@ CCYAN     = \033[36m
 
 LIBFTDIR = libft
 LIBFT = libft/libft.a
-SRC = main.c parsing/parsing.c parsing/parse_texture.c parsing/parse_color.c parsing/parse_map.c \
+SRC = main.c parsing/parsing.c parsing/texture_color.c parsing/tools.c parsing/parse_map.c \
 		gnl/get_next_line.c gnl/get_next_line_utils.c \
+		ray-cast/execute.c ray-cast/render.c ray-cast/events.c
 
 OBJ = ${SRC:.c=.o}
 
@@ -35,7 +36,7 @@ $(LIBFT):
 
 ${NAME}: ${OBJ}
 	@echo "$(BOLD)$(CGREEN)building the project...\033[0m"
-	${CC} ${CFLAGS} ${OBJ} ${LIBFT} -o ${NAME}
+	${CC} ${CFLAGS} -lmlx -lXext -lX11 -lm ${OBJ} ${LIBFT} -o ${NAME}
 
 clean:
 	@echo "$(BOLD)$(CGREEN)cleaning ...\033[0m"
