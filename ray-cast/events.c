@@ -6,11 +6,11 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:58:15 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/01/31 22:31:08 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/02/03 10:51:57 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_pars.h"
+#include "../cub.h"
 
 int	is_wall(float x, float y)
 {
@@ -127,7 +127,7 @@ int	game_loop(t_cube *cube)
 	return (0);
 }
 
-void	event_init(t_cube *cube)
+void	event_init(t_cube *cube, t_cub *cub)
 {
 	cube->keys.a = 0;
 	cube->keys.d = 0;

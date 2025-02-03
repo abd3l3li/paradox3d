@@ -1,4 +1,4 @@
-#include "../cub_pars.h"
+#include "../cub.h"
 
 
 //here we parse the texture line

@@ -1,4 +1,4 @@
-#include "../cub_pars.h"
+#include "../cub.h"
 
 void free_splited(char **splited)
 {

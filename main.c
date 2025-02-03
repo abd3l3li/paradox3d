@@ -1,5 +1,4 @@
-#include "cub_pars.h"
-#include "cube_3d.h"
+#include "cub.h"
 
 float		pi = 3.14159265359;
 float		player_angle = 0;
@@ -24,8 +23,6 @@ void    init_cub(t_cub *cub, char **av)
     cub->v_map->map_len = map_alloc(cub);
     cub->v_map->manner = 4;
 }
-
-
 
 int main(int ac, char **av)
 {

@@ -6,13 +6,13 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:57:28 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/01/31 22:31:01 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/02/03 10:52:05 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_pars.h"
+#include "../cub.h"
 
-static void	cube_initializing_and_protecting(t_cube *cube)
+static void	cube_initializing_and_protecting(t_cube *cube, t_cub *cub)
 {
 	cube->x = 200;
 	cube->y = 300;
@@ -36,14 +36,20 @@ static void	cube_initializing_and_protecting(t_cube *cube)
 	}
 	cube->addr = mlx_get_data_addr(cube->img, &cube->bits_per_pixel,
 			&cube->line_length, &cube->endian);
-	event_init(cube);
-	cube_render(cube);
+	event_init(cube, cub);
+	cube_render(cube, cub);
 }
 
 void	start_game(t_cube *cube, t_cub *cub)
 {
 	cube->width = 800;
 	cube->height = 600;
-	cube_initializing_and_protecting(cube);
+	int i = 0;
+	while(cub->v_map->map[i])
+	{
+		printf("%s\n", cub->v_map->map[i]);
+		i++;
+	}
+	cube_initializing_and_protecting(cube,cub);
 	mlx_loop(cube->mlx);
 }

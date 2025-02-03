@@ -6,11 +6,11 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:54:24 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/01/31 22:31:20 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/02/03 10:52:09 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub_pars.h"
+#include "../cub.h"
 
 void	put_pixel_to_image(int x, int y, int color, t_cube *cube)
 {
@@ -50,7 +50,7 @@ void	draw_vertical_line(t_cube *cube, int x, float wall_height, int color)
 	}
 }
 
-float	distance_to_wall(t_cube *cube, float angle)
+float	distance_to_wall(t_cube *cube, float angle, t_cub *cub)
 {
 	t_distance	distance;
 	int			map[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0,
@@ -83,7 +83,7 @@ float	distance_to_wall(t_cube *cube, float angle)
 	return (distance.distance);
 }
 
-void	cube_render(t_cube *cube)
+void	cube_render(t_cube *cube, t_cub *cub)
 {
 	t_render	render;
 	int			shadow;
@@ -100,7 +100,7 @@ void	cube_render(t_cube *cube)
 	render.ray_angle = player_angle - (FOV * pi / 180) / 2;
 	while (render.x < NUM_RAYS)
 	{
-		render.distance = distance_to_wall(cube, render.ray_angle);
+		render.distance = distance_to_wall(cube, render.ray_angle, cub);
 		render.distance = render.distance * cos(render.ray_angle
 				- player_angle);
 		render.wall_height = (WALL_HEIGHT / render.distance) * 300;

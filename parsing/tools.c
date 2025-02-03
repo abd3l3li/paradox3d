@@ -1,4 +1,4 @@
-#include "../cub_pars.h"
+#include "../cub.h"
 
 int     count_sep(char *line, char c)
 {

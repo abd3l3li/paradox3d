@@ -1,4 +1,4 @@
-#include "../cub_pars.h"
+#include "../cub.h"
 
 int is_map(char *line, t_cub *cub)
 {
