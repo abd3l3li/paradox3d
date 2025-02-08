@@ -6,26 +6,43 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:58:15 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/02/03 10:51:57 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:59:14 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-int	is_wall(float x, float y)
+int	is_wall(float x, float y, t_cube *cube)
 {
 	int	map_x;
 	int	map_y;
-	int	map[] =  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1};
-	map_x = (int)(x / 70);
-	map_y = (int)(y / 70);
-	if (map_x < 0 || map_x >= 11 || map_y < 0 || map_y >= 9)
-		return (1);
-	return (map[map_y * 11 + map_x] == 1);
+	int	*map;
+	int the_wall;
+	static int map_width;
+	static int map_height;
+	int grind_x;
+	int grind_y;
+
+
+	// while(cube->cub->v_map->map[map_height])
+	// 	map_height++;
+	// while(cube->cub->v_map->map[0][map_width])
+	// 	map_width++;
+	// grind_x = cube->width / map_width;
+	// grind_y = cube->height / map_height;
+	// printf("grind_x: %d\n grind_y: %d\n", grind_x, grind_y);
+	// map = string_to_array(cube->cub->v_map->map);
+	// map_x = (int)(x / grind_x);
+	// map_y = (int)(y / grind_y);
+	// printf("map_x: %d\n map_y: %d\n", map_x, map_y);
+	// printf("map_width: %d\n map_height: %d\n", map_width, map_height);
+	// if(cube->cub->v_map->map[map_y][map_x] == '1')
+	// {
+	// 	printf("cube->cub->v_map->map[map_y][map_x]: %c\n", cube->cub->v_map->map[map_y][map_x]);
+	// 	free(map);
+	// 	return (1);
+	// }
+	return (0);
 }
 
 int	close_window(t_cube *cube)
@@ -114,11 +131,11 @@ int	game_loop(t_cube *cube)
 		new_x = cube->x + cos(player_angle + pi / 2) * MOVE_SPEED;
 		new_y = cube->y + sin(player_angle + pi / 2) * MOVE_SPEED;
 	}
-	if (!is_wall(new_x, new_y) && !is_wall(new_x + collision_buffer, new_y
-			+ collision_buffer) && !is_wall(new_x + collision_buffer, new_y
-			- collision_buffer) && !is_wall(new_x - collision_buffer, new_y
-			+ collision_buffer) && !is_wall(new_x - collision_buffer, new_y
-			- collision_buffer))
+	if (!is_wall(new_x, new_y, cube) && !is_wall(new_x + collision_buffer, new_y
+			+ collision_buffer, cube) && !is_wall(new_x + collision_buffer, new_y
+			- collision_buffer, cube) && !is_wall(new_x - collision_buffer, new_y
+			+ collision_buffer, cube) && !is_wall(new_x - collision_buffer, new_y
+			- collision_buffer, cube))
 	{
 		cube->x = new_x;
 		cube->y = new_y;
@@ -127,7 +144,7 @@ int	game_loop(t_cube *cube)
 	return (0);
 }
 
-void	event_init(t_cube *cube, t_cub *cub)
+void	event_init(t_cube *cube)
 {
 	cube->keys.a = 0;
 	cube->keys.d = 0;

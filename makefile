@@ -2,7 +2,9 @@ NAME = cub3D
 CC = cc
 CFLAGS = #-g -Wall -Wextra -Werror
 RM = rm -rf
-
+MLX = $(MLX_DIR)/libmlx_Linux.a
+MLX_DIR = ./minilibx-linux
+MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/X11R6/lib -lXext -lX11 -lm -lbsd
 BOLD      = \033[1m
 CGREEN    = \033[32m
 CCYAN     = \033[36m
@@ -13,9 +15,9 @@ SRC = main.c parsing/parsing.c parsing/texture_color.c parsing/tools.c parsing/p
 		gnl/get_next_line.c gnl/get_next_line_utils.c \
 		ray-cast/execute.c ray-cast/render.c ray-cast/events.c
 
-OBJ = ${SRC:.c=.o}
+OBJ = $(SRC:.c=.o)
 
-all: print_art ${LIBFT} ${NAME}
+all: print_art ${LIBFT} ${MLX} ${NAME}
 
 print_art:
 	@echo "                                                                            "
@@ -30,22 +32,26 @@ print_art:
 	@echo "                                                                            "
 	@echo "                                                                            "
 
-
 $(LIBFT):
 	@$(MAKE) -C $(LIBFTDIR)
 
+$(MLX):
+	@$(MAKE) -C $(MLX_DIR)
+
 ${NAME}: ${OBJ}
 	@echo "$(BOLD)$(CGREEN)building the project...\033[0m"
-	${CC} ${CFLAGS} -lmlx -lXext -lX11 -lm ${OBJ} ${LIBFT} -o ${NAME}
+	${CC} ${CFLAGS} ${OBJ} ${LIBFT} ${MLX_FLAGS} -o ${NAME}
 
 clean:
 	@echo "$(BOLD)$(CGREEN)cleaning ...\033[0m"
 	@$(MAKE) -C $(LIBFTDIR) clean
+	@$(MAKE) -C $(MLX_DIR) clean
 	${RM} ${OBJ}
 
 fclean: clean
 	@${RM} ${NAME}
 	@$(MAKE) -C $(LIBFTDIR) fclean
+
 re: fclean all
 
 .PHONY: all clean fclean re
