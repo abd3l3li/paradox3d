@@ -6,15 +6,13 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:54:24 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/02/09 16:40:28 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/02/18 02:02:34 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 #include <stdlib.h>
 #include <string.h>
-
-
 
 void	put_pixel_to_image(int x, int y, int color, t_cube *cube)
 {
@@ -54,65 +52,7 @@ void	draw_vertical_line(t_cube *cube, int x, float wall_height, int color)
 	}
  }
 
-float distance_to_wall1(t_cube *cube, float angle) // not accurate but moving
-{
-    t_distance distance;
-    int map_x;
-    int map_y;
-
-    distance.ray_x = cube->x;
-    distance.ray_y = cube->y;
-    distance.ray_cos = cos(angle);
-    distance.ray_sin = sin(angle);
-    distance.distance = 0;
-    distance.step = 1.0;
-
-    while (1)
-    {
-        map_x = (int)(distance.ray_x / 70);
-        map_y = (int)(distance.ray_y / 70);
-
-        int row_exists = 0;
-        int current_row = 0;
-        while (cube->cub->v_map->map[current_row] != NULL)
-        {
-            if (current_row == map_y)
-            {
-                row_exists = 1;
-                break;
-            }
-            current_row++;
-        }
-        if (!row_exists)
-            break;
-
-        char *row = cube->cub->v_map->map[map_y];
-        int col_exists = 0;
-        int current_col = 0;
-        while (row[current_col] != '\0')
-        {
-            if (current_col == map_x)
-            {
-                col_exists = 1;
-                break;
-            }
-            current_col++;
-        }
-        if (!col_exists)
-            break;
-
-        if (cube->cub->v_map->map[map_y][map_x] == '1')
-            return (distance.distance);
-
-        distance.ray_x += distance.ray_cos * distance.step;
-        distance.ray_y += distance.ray_sin * distance.step;
-        distance.distance += distance.step;
-    }
-
-    return (distance.distance);
-}
-
-float distance_to_wall(t_cube *cube, float angle)//  accurate but not moving
+float distance_to_wall(t_cube *cube, float angle)
 {
     t_distance distance;
     int map_x;
@@ -121,6 +61,7 @@ float distance_to_wall(t_cube *cube, float angle)//  accurate but not moving
     float player_y = 0;
     int found = 0;
 
+    // Find initial player position ('W')
     while (cube->cub->v_map->map[(int)player_y] && !found)
     {
         player_x = 0;
@@ -136,14 +77,15 @@ float distance_to_wall(t_cube *cube, float angle)//  accurate but not moving
         if (!found)
             player_y++;
     }
-    player_x += cube->x/50;
-    player_y += cube->y/50;
-    distance.ray_x = player_x * 70 + 60;
-    distance.ray_y = player_y * 70 + 60;
+
+    // Center the player in the tile (70/2 = 35)
+    distance.ray_x = (player_x * 70) + 35 + cube->x;
+    distance.ray_y = (player_y * 70) + 35 + cube->y;
+    
     distance.ray_cos = cos(angle);
     distance.ray_sin = sin(angle);
     distance.distance = 0;
-    distance.step = 1; 
+    distance.step = 1;
 
     while (1)
     {
@@ -154,12 +96,10 @@ float distance_to_wall(t_cube *cube, float angle)//  accurate but not moving
             !cube->cub->v_map->map[map_y][map_x])
             break;
 
-
         if (cube->cub->v_map->map[map_y][map_x] == '1')
         {
-
-            float dx = distance.ray_x - (player_x * 70 + 60);
-            float dy = distance.ray_y - (player_y * 70 + 60);
+            float dx = distance.ray_x - ((player_x * 70) + 35 + cube->x);
+            float dy = distance.ray_y - ((player_y * 70) + 35 + cube->y);
             return sqrt(dx * dx + dy * dy);
         }
 
@@ -169,31 +109,37 @@ float distance_to_wall(t_cube *cube, float angle)//  accurate but not moving
     }
     return (distance.distance);
 }
-
-void	cube_render(t_cube *cube)
+void cube_render(t_cube *cube)
 {
-	t_render	render;
-	int			shadow;
+    t_render render;
+    render.angle_step = (FOV * pi / 180) / NUM_RAYS;
+    render.x = 0;
+    render.i = 0;
+    render.color = 0x4682B4;
 
-	render.angle_step = (FOV * pi / 180) / NUM_RAYS;
-	render.x = 0;
-	render.i = 0;
-	render.color = 0x4682B4;
-	while (render.i < cube->width * cube->height)
-	{
-		((int *)cube->addr)[render.i] = 0;
-		render.i++;
-	}
-	render.ray_angle = player_angle - (FOV * pi / 180) / 2;
-	while (render.x < NUM_RAYS)
-	{
-		render.distance = distance_to_wall(cube, render.ray_angle);
-		render.distance = render.distance * cos(render.ray_angle
-				- player_angle);
-		render.wall_height = (WALL_HEIGHT / render.distance) * 300;
-		draw_vertical_line(cube, render.x, render.wall_height, render.color);
-		render.ray_angle += render.angle_step;
-		render.x++;
-	}
-	mlx_put_image_to_window(cube->mlx, cube->win, cube->img, 0, 0);
+    // Clear screen
+    while (render.i < cube->width * cube->height)
+    {
+        ((int *)cube->addr)[render.i] = 0;
+        render.i++;
+    }
+
+    // Calculate starting angle
+    render.ray_angle = player_angle - (FOV * pi / 180) / 2;
+
+    // Draw walls
+    while (render.x < NUM_RAYS)
+    {
+        render.distance = distance_to_wall(cube, render.ray_angle);
+        // Fix fisheye effect
+        render.distance = render.distance * cos(render.ray_angle - player_angle);
+        // Adjust wall height calculation
+        render.wall_height = (WALL_HEIGHT / render.distance) * (cube->height / 2);
+        
+        draw_vertical_line(cube, render.x, render.wall_height, render.color);
+        render.ray_angle += render.angle_step;
+        render.x++;
+    }
+
+    mlx_put_image_to_window(cube->mlx, cube->win, cube->img, 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:06:17 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/02/04 13:32:20 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/02/18 01:40:00 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,12 @@ typedef struct s_cube
 	int			height;
 	float		x;
 	float		y;
+	float 		x_map;
+	float 		y_map;
 	t_keys		keys;
 	t_cub		*cub;
-	
+	int 		map_height;
+	int 		map_width;
 }				t_cube;
 
 typedef struct s_render
