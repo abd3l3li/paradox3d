@@ -6,59 +6,26 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:58:15 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/02/18 02:20:49 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:10:03 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
-int is_wa1ll(float x, float y, t_cube *cube)
+
+int	is_wall(float x, float y, t_cube *cube)
 {
-    float player_x = cube->x + x / 70;
-    float player_y = cube->y + y / 70;
-    float buffer = 0.2;  // Small buffer to account for player size
+	int		found;
+	float	buffer;
 
-    // Check four points around the player (corners of the hitbox)
-    if (cube->cub->v_map->map[(int)(player_y - buffer)][(int)(player_x - buffer)] == '1' ||
-        cube->cub->v_map->map[(int)(player_y - buffer)][(int)(player_x + buffer)] == '1' ||
-        cube->cub->v_map->map[(int)(player_y + buffer)][(int)(player_x - buffer)] == '1' ||
-        cube->cub->v_map->map[(int)(player_y + buffer)][(int)(player_x + buffer)] == '1')
-    {
-        return (1);  // Collision detected
-    }
-
-    return (0);  // No collision
-}
-int is_wall(float x, float y, t_cube *cube)
-{	
-	float player_x = 0;
-	float player_y = 0;
-	int found = 0;
-	float buffer = 0.2; 
-
-	
-	while (cube->cub->v_map->map[(int)player_y] && !found)
-    {
-        player_x = 0;
-        while (cube->cub->v_map->map[(int)player_y][(int)player_x])
-        {
-            if (cube->cub->v_map->map[(int)player_y][(int)player_x] == 'W')
-            {
-                found = 1;
-                break;
-            }
-            player_x++;
-        }
-        if (!found)
-            player_y++;
-    }
-     player_x += x / 70;
-     player_y += y / 70;
-	 player_y += 0.7;
-	 player_x += 0.7;
-	 
-    if (cube->cub->v_map->map[(int)(player_y - buffer)][(int)(player_x - buffer)] == '1')
-        return (1);
-	
+	found = 0;
+	buffer = 0.2;
+	cube->player_px += x / 70;
+	cube->player_py += y / 70;
+	cube->player_py += 0.7;
+	cube->player_px += 0.7;
+	if (cube->cub->v_map->map[(int)(cube->player_py
+			- buffer)][(int)(cube->player_px - buffer)] == '1')
+		return (1);
 	return (0);
 }
 
@@ -107,54 +74,59 @@ int	key_release(int key, t_cube *cube)
 	return (0);
 }
 
+static void	handle_movement(t_cube *cube, float *new_x, float *new_y)
+{
+	const float	pi = PI;
+
+	if (cube->keys.w)
+	{
+		*new_x = cube->x + cos(cube->player_angle) * MOVE_SPEED;
+		*new_y = cube->y + sin(cube->player_angle) * MOVE_SPEED;
+	}
+	if (cube->keys.s)
+	{
+		*new_x = cube->x - cos(cube->player_angle) * MOVE_SPEED;
+		*new_y = cube->y - sin(cube->player_angle) * MOVE_SPEED;
+	}
+	if (cube->keys.a)
+	{
+		*new_x = cube->x + cos(cube->player_angle - pi / 2) * MOVE_SPEED;
+		*new_y = cube->y + sin(cube->player_angle - pi / 2) * MOVE_SPEED;
+	}
+	if (cube->keys.d)
+	{
+		*new_x = cube->x + cos(cube->player_angle + pi / 2) * MOVE_SPEED;
+		*new_y = cube->y + sin(cube->player_angle + pi / 2) * MOVE_SPEED;
+	}
+}
+
 int	game_loop(t_cube *cube)
 {
 	float	new_x;
 	float	new_y;
+	float	pi;
 
 	new_x = cube->x;
 	new_y = cube->y;
-
 	if (cube->keys.left)
 	{
-		player_angle -= ROTATION_SPEED;
-		if (player_angle < 0)
-			player_angle += 2 * pi;
+		cube->player_angle -= ROTATION_SPEED;
+		if (cube->player_angle < 0)
+			cube->player_angle += 2 * cube->pi;
 	}
 	if (cube->keys.right)
 	{
-		player_angle += ROTATION_SPEED;
-		if (player_angle > 2 * pi)
-			player_angle -= 2 * pi;
+		cube->player_angle += ROTATION_SPEED;
+		if (cube->player_angle > 2 * cube->pi)
+			cube->player_angle -= 2 * cube->pi;
 	}
-	if (cube->keys.w)
-	{
-		new_x = cube->x + cos(player_angle) * MOVE_SPEED;
-		new_y = cube->y + sin(player_angle) * MOVE_SPEED;
-	}
-	if (cube->keys.s)
-	{
-		new_x = cube->x - cos(player_angle) * MOVE_SPEED;
-		new_y = cube->y - sin(player_angle) * MOVE_SPEED;
-	}
-	if (cube->keys.a)
-	{
-		new_x = cube->x + cos(player_angle - pi / 2) * MOVE_SPEED;
-		new_y = cube->y + sin(player_angle - pi / 2) * MOVE_SPEED;
-	}
-	if (cube->keys.d)
-	{
-		new_x = cube->x + cos(player_angle + pi / 2) * MOVE_SPEED;
-		new_y = cube->y + sin(player_angle + pi / 2) * MOVE_SPEED;
-	}
-
+	handle_movement(cube, &new_x, &new_y);
 	if (!is_wall(new_x, new_y, cube))
 	{
 		cube->x = new_x;
 		cube->y = new_y;
 	}
-	cube_render(cube);
-	return (0);
+	return (cube_render(cube), 0);
 }
 
 void	event_init(t_cube *cube)
@@ -165,6 +137,7 @@ void	event_init(t_cube *cube)
 	cube->keys.s = 0;
 	cube->keys.left = 0;
 	cube->keys.right = 0;
+	cube->player_angle += ROTATION_SPEED;
 	mlx_hook(cube->win, 2, 1L << 0, key_press, cube);
 	mlx_hook(cube->win, 3, 1L << 1, key_release, cube);
 	mlx_loop_hook(cube->mlx, game_loop, cube);

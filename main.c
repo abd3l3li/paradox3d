@@ -1,8 +1,5 @@
 #include "cub.h"
 
-float		pi = 3.14159265359;
-float		player_angle = 0;
-
 void    init_cub(t_cub *cub, char **av)
 {
     cub->v_texture = ft_calloc(1, sizeof(t_texture));
@@ -29,6 +26,7 @@ int main(int ac, char **av)
     t_cub   cub;
     t_cube	cube;
 
+    cube.player_angle = 0;
     if (ac != 2)
     {
         printf("Error\n not enough arguments\n");

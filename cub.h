@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:06:17 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/02/18 01:40:00 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:01:18 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 #include "gnl/get_next_line.h"
 
 
-extern float	pi;
 #define RIGHT_KEY 65363
 #define LEFT_KEY 65361
 #define W_KEY 119
@@ -32,8 +31,7 @@ extern float	pi;
 #define A_KEY 97
 #define D_KEY 100
 #define ESC_KEY 65307
-
-extern float	player_angle;
+#define PI 3.14159265359
 #define ROTATION_SPEED 0.01
 #define MOVE_SPEED 1
 #define FOV 60
@@ -124,6 +122,11 @@ typedef struct s_cube
 	t_cub		*cub;
 	int 		map_height;
 	int 		map_width;
+	float		player_angle;
+	float 		player_px;
+	float 		player_py;
+	float 		pi;
+
 }				t_cube;
 
 typedef struct s_render
