@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:57:28 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/02/19 18:04:19 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:09:28 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,29 @@
 #include <stdlib.h>
 #include <string.h>
 
+int	ft_rgb_to_hex(int r, int g, int b)
+{
+	return (r << 16 | g << 8 | b);
+}
 static void	cube_initializing_and_protecting(t_cube *cube, t_cub *cub)
 {
-	cube->x = 1;
-	cube->y = 1;
+	cube->x = 0;
+	cube->y = 0;
+	cube->ceiling_color = ft_rgb_to_hex(cub->v_color->c_r,
+			cub->v_color->c_g, cub->v_color->c_b);
+	cube->floor_color = ft_rgb_to_hex(cub->v_color->f_r,
+			cub->v_color->f_g, cub->v_color->f_b);
 	cube->mlx = mlx_init();
 	if (!cube->mlx)
 		write(2, "Error: mlx_init\n", 16);
-	cube->win = mlx_new_window(cube->mlx, 800, 600, "cube");
+	cube->win = mlx_new_window(cube->mlx, cube->width, cube->height, "cube");
 	if (!cube->win)
 	{
 		mlx_destroy_display(cube->mlx);
 		free(cube->mlx);
 		write(2, "Error: mlx_new_window\n", 23);
 	}
-	cube->img = mlx_new_image(cube->mlx, 800, 600);
+	cube->img = mlx_new_image(cube->mlx, cube->width, cube->height);
 	if (!cube->img)
 	{
 		mlx_destroy_window(cube->mlx, cube->win);
@@ -46,8 +54,8 @@ void	start_game(t_cube *cube, t_cub *cub)
 {
 	int	i;
 
-	cube->width = 800;
-	cube->height = 600;
+	cube->width = 1000;
+	cube->height = 800;
 	i = 0;
 	cube->pi = PI;
 	cube->cub = cub;

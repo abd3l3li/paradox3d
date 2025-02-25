@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:06:17 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/02/19 18:01:18 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:18:51 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@
 #define D_KEY 100
 #define ESC_KEY 65307
 #define PI 3.14159265359
-#define ROTATION_SPEED 0.01
-#define MOVE_SPEED 1
+#define ROTATION_SPEED 0.05
+#define MOVE_SPEED 2
 #define FOV 60
-#define NUM_RAYS 800
-#define WALL_HEIGHT 200
+#define NUM_RAYS 1000
+#define WALL_HEIGHT 300
+#define TILE_SIZE 300
 
 
 typedef struct s_color
@@ -108,10 +109,15 @@ typedef struct s_cube
 	void		*mlx;
 	void		*win;
 	void		*img;
+	void 		*tex_img;
 	char		*addr;
+	char 		*tex_addr;
 	int			bits_per_pixel;
+	int 		tex_bits_per_pixel;
 	int			line_length;
+	int 		tex_line_length;
 	int			endian;
+	int 		tex_endian;
 	int			width;
 	int			height;
 	float		x;
@@ -126,6 +132,8 @@ typedef struct s_cube
 	float 		player_px;
 	float 		player_py;
 	float 		pi;
+	int			ceiling_color;
+	int			floor_color;
 
 }				t_cube;
 
@@ -135,8 +143,6 @@ typedef struct s_render
 	float		angle_step;
 	float		wall_height;
 	float		ray_angle;
-	int			x;
-	int			i;
 	int			color;
 }				t_render;
 
