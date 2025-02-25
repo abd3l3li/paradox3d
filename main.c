@@ -19,6 +19,7 @@ void    init_cub(t_cub *cub, char **av)
     cub->v_map->manner = 4;
     cub->v_map->map_len = map_alloc(cub);
     cub->v_map->manner = 4;
+
 }
 
 int main(int ac, char **av)
@@ -45,6 +46,7 @@ int main(int ac, char **av)
         close(cub.fd);//clean up function
         return (1);
     }
+    init_texture(&cube, cub.v_texture->no);
     // else
     //     printf("parsing successful\n");
 

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef CUB_H
-#define CUB_H
+#	define CUB_H
 
 #include <math.h>
 #include <mlx.h>
@@ -107,6 +107,7 @@ typedef struct s_keys
 typedef struct s_cube
 {
 	void		*mlx;
+	void		*tex_mlx;
 	void		*win;
 	void		*img;
 	void 		*tex_img;
@@ -119,7 +120,9 @@ typedef struct s_cube
 	int			endian;
 	int 		tex_endian;
 	int			width;
+	int			tex_width;
 	int			height;
+	int			tex_height;
 	float		x;
 	float		y;
 	float 		x_map;
@@ -193,6 +196,9 @@ int				close_window(t_cube *cube);
 void			event_init(t_cube *cube);
 void			put_pixel_to_image(int x, int y, int color, t_cube *cube);
 int				*string_to_array(char **map);
+
+int init_texture(t_cube *cube, char *texture_path);
+int get_texture_color(t_cube *cube, int tex_x, int tex_y);
 
 
 #endif

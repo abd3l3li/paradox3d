@@ -26,30 +26,47 @@ void	put_pixel_to_image(int x, int y, int color, t_cube *cube)
 	}
 }
 
-void	draw_vertical_line(t_cube *cube, int x, float wall_height, int color)
+void draw_vertical_line(t_cube *cube, int x, float wall_height, int color)
 {
-	int	start;
-	int	end;
-	int	y;
+    int start;
+    int end;
+    int y;
 
-	y = 0;
-	start = (cube->height - wall_height) / 2;
-	end = (cube->height + wall_height) / 2;
-	while (y < start)
-	{
-		put_pixel_to_image(x, y, cube->ceiling_color, cube);//understand this
-		y++;
-	}
-	while (y < end && y < cube->height)
-	{
-		put_pixel_to_image(x, y, 0x03adfc, cube);//understand this
-		y++;
-	}
-	while (y < cube->height)
-	{
-		put_pixel_to_image(x, y, cube->floor_color, cube);
-		y++;
-	}
+    y = 0;
+    start = (cube->height - wall_height) / 2;
+    end = (cube->height + wall_height) / 2;
+    while (y < start)
+    {
+        put_pixel_to_image(x, y, cube->ceiling_color, cube);
+        y++;
+    }
+    while (y < end && y < cube->height)
+    {
+        int tex_y = (y - start) * (cube->tex_height / wall_height);
+        int tex_x = x % cube->tex_width; // Assuming texture is horizontally tiled
+        if (tex_y < 0 || tex_y >= cube->tex_height || tex_x < 0 || tex_x >= cube->tex_width)
+        {
+            put_pixel_to_image(x, y, 0x03adfc, cube); // Default color in case of error
+        }
+        else
+        {
+            int tex_color = get_texture_color(cube, tex_x, tex_y); // Function to get texture color
+            if (tex_color == -1)
+            {
+                put_pixel_to_image(x, y, 0x03adfc, cube); // Default color in case of error
+            }
+            else
+            {
+                put_pixel_to_image(x, y, tex_color, cube);
+            }
+        }
+        y++;
+    }
+    while (y < cube->height)
+    {
+        put_pixel_to_image(x, y, cube->floor_color, cube);
+        y++;
+    }
 }
 
 static void	find_player_position(t_map *v_map, float *player_x, float *player_y)
