@@ -157,6 +157,7 @@ typedef struct s_distance
 	float		ray_sin;
 	float		distance;
 	float		step;
+	int			hit_side; // 0 for vertical (x-side), 1 for horizontal (y-side)
 }				t_distance;
 
 

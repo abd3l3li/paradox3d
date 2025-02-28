@@ -2,9 +2,7 @@ NAME = cub3D
 CC = cc
 CFLAGS = -g #-Wall -Wextra -Werror
 RM = rm -rf
-MLX = $(MLX_DIR)/libmlx_Linux.a
-MLX_DIR = ./minilibx-linux
-MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/X11R6/lib -lXext -lX11 -lm -lbsd
+MLX_FLAGS = -lmlx -lXext -lX11 -lm
 BOLD      = \033[1m
 CGREEN    = \033[32m
 CCYAN     = \033[36m
@@ -17,7 +15,7 @@ SRC = main.c parsing/parsing.c parsing/texture_color.c parsing/tools.c parsing/p
 
 OBJ = $(SRC:.c=.o)
 
-all: print_art ${LIBFT} ${MLX} ${NAME}
+all: print_art ${LIBFT} ${NAME}
 
 print_art:
 	@echo "                                                                            "
@@ -35,9 +33,6 @@ print_art:
 $(LIBFT):
 	@$(MAKE) -C $(LIBFTDIR)
 
-$(MLX):
-	@$(MAKE) -C $(MLX_DIR)
-
 ${NAME}: ${OBJ}
 	@echo "$(BOLD)$(CGREEN)building the project...\033[0m"
 	${CC} ${CFLAGS} ${OBJ} ${LIBFT} ${MLX_FLAGS} -o ${NAME}
@@ -45,7 +40,6 @@ ${NAME}: ${OBJ}
 clean:
 	@echo "$(BOLD)$(CGREEN)cleaning ...\033[0m"
 	@$(MAKE) -C $(LIBFTDIR) clean
-	@$(MAKE) -C $(MLX_DIR) clean
 	${RM} ${OBJ}
 
 fclean: clean
