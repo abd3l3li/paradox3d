@@ -26,8 +26,8 @@ void put_pixel_to_image(int x, int y, int color, t_cube *cube) {
 void draw_vertical_line(t_cube *cube, int x, float wall_height, int color, float hit_x, float hit_y, int hit_side) {
     int start = (cube->height - (int)wall_height) / 2;
     int end = (cube->height + (int)wall_height) / 2;
-    start = start < 0 ? 0 : start;
-    end = end >= cube->height ? cube->height - 1 : end;
+    // start = start < 0 ? 0 : start;
+    // end = end >= cube->height ? cube->height - 1 : end;
 
     // Calculate texture X coordinate based on hit position and side
     int tex_x;
@@ -143,12 +143,12 @@ float distance_to_wall(t_cube *cube, float angle, float *hit_x, float *hit_y, in
 void cube_render(t_cube *cube) {
     t_render render;
     float pi = PI;
-    render.angle_step = (FOV * pi / 180) / NUM_RAYS;
+    render.angle_step = (FOV * pi / 180) / cube->width;
     int i = 0;
     render.color = 0x4682B4;
     render.ray_angle = cube->player_angle - (FOV * pi / 180) / 2;
 
-    while (i < NUM_RAYS) {
+    while (i < cube->width) {
         float hit_x, hit_y;
         int hit_side;
         render.distance = distance_to_wall(cube, render.ray_angle, &hit_x, &hit_y, &hit_side);
