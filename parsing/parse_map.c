@@ -10,12 +10,12 @@ int is_map(char *line, t_cub *cub)
     if (cub->v_map->manner > 0) // for making sure we skipped the first 4 texture lines
     {
         if (tmp[0] == 'W' || tmp[0] == 'E' || tmp[0] == 'S' || tmp[0] == 'N')
-            return (cub->v_map->manner--, 0);
+            return (free(tmp), cub->v_map->manner--, 0);
     }
     if (tmp[0] == '1' || tmp[0] == '0' || tmp[0] == 'W' 
         || tmp[0] == 'E' || tmp[0] == 'S' || tmp[0] == 'N')
-        return (1);
-    return (0);
+        return (free(tmp), 1);
+    return (free(tmp), 0);
 }
 
 int map_alloc(t_cub *cub)

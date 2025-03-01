@@ -167,10 +167,11 @@ int parse_cub(char *file, t_cub *cub);
 void    init_cub(t_cub *cub, char **av);
 //void    free_cub(t_cub *cub);
 
+void	free_cub_resources(t_cub *cub);
 void   free_splited(char **splited);
-char *ft_skip(t_cub *cub);
-int empty_line(char *line);
-int extension_check(char *file);
+int		empty_line(char *line);
+void	drain_gnl(int fd);
+int		extension_check(char *file);
 
 void    parse_texture_line(t_cub *cub, char **splited, char *type);
 int parse_color_line(t_cub *cub, char *line, char *splited);

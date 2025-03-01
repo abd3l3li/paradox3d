@@ -56,7 +56,7 @@ int get_rgb(char *line, t_cub *cub)
         cub->v_color->c_g = ft_atoi(splited[2]);
         cub->v_color->c_b = ft_atoi(splited[3]);
     }
-    //free_splited(splited);
+    free_splited(splited);
     return (0);
 }
 

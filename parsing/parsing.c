@@ -1,5 +1,17 @@
 #include "../cub.h"
 
+
+void drain_gnl(int fd)
+{
+    char *line;
+	line = get_next_line(fd);
+    while (line != NULL)
+    {
+        free(line);
+		line = get_next_line(fd);
+    }
+}
+
 void free_splited(char **splited)
 {
     int i = 0;
@@ -10,21 +22,6 @@ void free_splited(char **splited)
     }
     free(splited);
 }
-
-// char *ft_skip(t_cub *cub)
-// {
-// 	char *line;
-
-// 	line = get_next_line(cub->fd);
-// 	while (line != NULL)
-// 	{
-// 		if(!empty_line(line))
-// 			break;
-// 		free(line);
-// 		line = get_next_line(cub->fd);
-// 	}
-// 	return (line);	
-// }
 
 int	empty_line(char *line)
 {
