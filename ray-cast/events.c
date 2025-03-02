@@ -16,7 +16,7 @@ int	is_wall(float x, float y, t_cube *cube)
 {
 	float	buffer;
 
-	buffer = 0.1;
+	buffer = 0.2;
 	cube->player_px += x / TILE_SIZE;
 	cube->player_py += y / TILE_SIZE;
 	cube->player_py += 0.7;

@@ -32,12 +32,12 @@
 #define D_KEY 100
 #define ESC_KEY 65307
 #define PI 3.14159265359
-#define ROTATION_SPEED 0.05
-#define MOVE_SPEED 7
+#define ROTATION_SPEED 0.03
+#define MOVE_SPEED 5
 #define FOV 60
 // #define NUM_RAYS 600
-#define WALL_HEIGHT 300
-#define TILE_SIZE 120
+#define WALL_HEIGHT 250
+#define TILE_SIZE 100
 
 
 typedef struct s_color
@@ -106,6 +106,8 @@ typedef struct s_keys
 
 typedef struct s_cube
 {
+	t_keys		keys;
+	t_cub		*cub;
 	void		*mlx;
 	void		*tex_mlx;
 	void		*win;
@@ -127,8 +129,6 @@ typedef struct s_cube
 	float		y;
 	float 		x_map;
 	float 		y_map;
-	t_keys		keys;
-	t_cub		*cub;
 	int 		map_height;
 	int 		map_width;
 	float		player_angle;
@@ -137,7 +137,7 @@ typedef struct s_cube
 	float 		pi;
 	int			ceiling_color;
 	int			floor_color;
-
+    int			hit_side;
 }				t_cube;
 
 typedef struct s_render
@@ -164,10 +164,9 @@ typedef struct s_distance
 
 
 int parse_cub(char *file, t_cub *cub);
-void    init_cub(t_cub *cub, char **av);
 //void    free_cub(t_cub *cub);
-
-void	free_cub_resources(t_cub *cub);
+void free_cub_resources(t_cub *cub, t_cube *cube);
+void destroy_cube(t_cube *cube);
 void   free_splited(char **splited);
 int		empty_line(char *line);
 void	drain_gnl(int fd);
@@ -197,10 +196,11 @@ void			cube_render(t_cube *cube);
 int				close_window(t_cube *cube);
 void			event_init(t_cube *cube);
 void			put_pixel_to_image(int x, int y, int color, t_cube *cube);
-int				*string_to_array(char **map);
+// int				*string_to_array(char **map);
 
 int init_texture(t_cube *cube, char *texture_path);
 int get_texture_color(t_cube *cube, int tex_x, int tex_y);
+void draw_vertical_line(t_cube *cube, int x, float wall_height, int color, float hit_x, float hit_y);
 
 
 #endif

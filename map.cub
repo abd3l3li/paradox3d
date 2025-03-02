@@ -1,11 +1,11 @@
 C 255, 255, 255
-NO ./r9aya.xpm
-SO ./r9aya.xpm
-WE ./r9aya.xpm
+NO ./test1.xpm
+SO ./test2.xpm
+WE ./test2.xpm
 
 F 255, 255, 255
     
-EA ./r9aya.xpm
+EA ./test2.xpm
     1111111111111111111111111
     1000000000110000000000001
     1011001001111110000100001
