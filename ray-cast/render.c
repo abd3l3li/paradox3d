@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:54:24 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/03 22:42:53 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:48:39 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ float distance_to_wall(t_cube *cube, float angle, float *hit_x, float *hit_y)
     *hit_x = d.ray_x;
     *hit_y = d.ray_y;
     cube->hit_side = 0;
-    return INFINITY;
+    return 0;
 }
 
 void cube_render(t_cube *cube)
