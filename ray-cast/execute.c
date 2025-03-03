@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:57:28 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/01 00:29:20 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:40:49 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ static void cube_initializing_and_protecting(t_cube *cube, t_cub *cub)
     cube_render(cube);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// start_game: entry point for the game loop
-////////////////////////////////////////////////////////////////////////////////
 void start_game(t_cube *cube, t_cub *cub)
 {
     cube->width  = 800;

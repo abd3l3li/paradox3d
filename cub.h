@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:06:17 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/01 00:56:00 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/03 03:01:27 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 #define ESC_KEY 65307
 #define PI 3.14159265359
 #define ROTATION_SPEED 0.03
-#define MOVE_SPEED 5
+#define MOVE_SPEED 10
 #define FOV 60
 // #define NUM_RAYS 600
 #define WALL_HEIGHT 250

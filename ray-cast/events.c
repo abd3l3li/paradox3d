@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:58:15 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/01 01:06:37 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:42:50 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	is_wall(float x, float y, t_cube *cube)
 	cube->player_py += y / TILE_SIZE;
 	cube->player_py += 0.7;
 	cube->player_px += 0.7;
-	if (cube->cub->v_map->map[(int)(cube->player_py- buffer)][(int)(cube->player_px - buffer)] == '1' )
+	if (cube->cub->v_map->map[(int)(cube->player_py- buffer)][(int)(cube->player_px - buffer)] == '1'|| 
+		cube->cub->v_map->map[(int)(cube->player_py- buffer)][(int)(cube->player_px - buffer)] == ' ')
 		return (1);
 	return (0);
 }
