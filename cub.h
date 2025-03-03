@@ -33,7 +33,7 @@
 #define ESC_KEY 65307
 #define PI 3.14159265359
 #define ROTATION_SPEED 0.03
-#define MOVE_SPEED 10
+#define MOVE_SPEED 4
 #define FOV 60
 // #define NUM_RAYS 600
 #define WALL_HEIGHT 250
