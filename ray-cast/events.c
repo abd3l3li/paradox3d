@@ -21,12 +21,13 @@ int	is_wall(float x, float y, t_cube *cube)
 	cube->player_py += y / TILE_SIZE;
 	cube->player_py += 0.7;
 	cube->player_px += 0.7;
-	if (cube->cub->v_map->map[(int)(cube->player_py- buffer)][(int)(cube->player_px - buffer)] == '1'|| 
-		cube->cub->v_map->map[(int)(cube->player_py- buffer)][(int)(cube->player_px - buffer)] == ' ')
+	if (cube->cub->v_map->map[(int)(cube->player_py
+			- buffer)][(int)(cube->player_px - buffer)] == '1'
+		|| cube->cub->v_map->map[(int)(cube->player_py
+			- buffer)][(int)(cube->player_px - buffer)] == ' ')
 		return (1);
 	return (0);
 }
-
 
 int	close_window(t_cube *cube)
 {

@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:06:17 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/03 03:01:27 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/04 02:56:26 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,18 @@ typedef struct s_distance
 	int			hit_side; // 0 for vertical (x-side), 1 for horizontal (y-side)
 }				t_distance;
 
-
-
+typedef struct s_dis
+{
+	float		base_x;
+	float		base_y;
+	int			map_height;
+	int 		map_width;
+	int			row_length;
+	int			mx;
+	int			my;
+	float		dx;
+	float		dy;
+} t_dis;
 
 int parse_cub(char *file, t_cub *cub);
 //void    free_cub(t_cub *cub);
