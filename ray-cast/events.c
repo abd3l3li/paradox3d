@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:58:15 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/05 01:26:36 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/05 01:50:12 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_wall(float x, float y, t_cube *cube)
 int	key_press(int key, t_cube *cube)
 {
 	if (key == 65307)
-		destroy_cube(0, cube);
+		destroy_cube(cube);
 	if (key == W_KEY)
 		cube->keys.w = 1;
 	if (key == S_KEY)
@@ -120,11 +120,11 @@ int	game_loop(t_cube *cube)
 	}
 	return (cube_render(cube), 0);
 }
-int destroy_window(t_cube *cube)
-{
-	destroy_cube(0, cube);
-	exit(0);
-}
+// int destroy_window(t_cube *cube)
+// {
+// 	destroy_cube(0, cube);
+// 	exit(0);
+// }
 void	event_init(t_cube *cube)
 {
 	
@@ -139,6 +139,6 @@ void	event_init(t_cube *cube)
 	mlx_hook(cube->win, 3, 1L << 1, key_release, cube);
 	mlx_loop_hook(cube->mlx, game_loop, cube);
 	mlx_hook(cube->win, 17, 1L << 17, destroy_cube, cube);
-	mlx_hook(cube->win, 17, 1L << 17, destroy_window, cube);
+	// mlx_hook(cube->win, 17, 1L << 17, destroy_window, cube);
 	
 }

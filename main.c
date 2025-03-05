@@ -1,12 +1,11 @@
 #include "cub.h"
 
 
-int destroy_cube(int event_code, void *param)
+int destroy_cube(void *param)
 {
     int i;
     t_cube *cube;
 
-    (void)event_code;
     cube = (t_cube *)param;
     i = 0;
     if (cube->mlx)

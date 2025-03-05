@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:06:17 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/04 02:56:26 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/05 01:49:59 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ typedef struct s_dis
 int parse_cub(char *file, t_cub *cub);
 //void    free_cub(t_cub *cub);
 void free_cub_resources(t_cub *cub, t_cube *cube);
-int destroy_cube(int event_code, void *param);
+int destroy_cube(void *param);
 void   free_splited(char **splited);
 int		empty_line(char *line);
 void	drain_gnl(int fd);

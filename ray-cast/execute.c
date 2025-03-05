@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:57:28 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/04 02:54:10 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/05 01:50:17 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	cube_initializing_and_protecting(t_cube *cube, t_cub *cub)
 	if (!load_textures(cube))
 	{
 		write(2, "Error: load_textures\n", 22);
-		destroy_cube(0, cube);
+		destroy_cube(cube);
 	}
 	event_init(cube);
 	cube_render(cube);
