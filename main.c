@@ -1,19 +1,34 @@
 #include "cub.h"
 
-void destroy_cube(t_cube *cube)
+
+int destroy_cube(int event_code, void *param)
 {
+    int i;
+    t_cube *cube;
+
+    (void)event_code;
+    cube = (t_cube *)param;
+    i = 0;
     if (cube->mlx)
     {
         if (cube->img)
             mlx_destroy_image(cube->mlx, cube->img);
-        if (cube->tex_img)
-            mlx_destroy_image(cube->mlx, cube->tex_img);
+        
+        while (i < 4)
+        {
+            if (cube->tex_img[i].img)
+                mlx_destroy_image(cube->mlx, cube->tex_img[i].img);
+            i++;
+        }
+        
         if (cube->win)
             mlx_destroy_window(cube->mlx, cube->win);
         mlx_destroy_display(cube->mlx);
         free(cube->mlx);
     }
+    free_cub_resources(cube->cub, cube);
     exit(0);
+    return (0);
 }
 
 void free_cub_resources(t_cub *cub, t_cube *cube)
@@ -108,7 +123,7 @@ int main(int ac, char **av)
     }
     if (parse_cub(av[1], &cub) == -1)
     {
-        printf("Error\n parsing failed\n");
+        printf("\033[1;31m\033[40m Error\n parsing failed! \033[0m\n");
         free_cub_resources(&cub, &cube);
         return (1);
     }

@@ -92,6 +92,8 @@ typedef struct s_data
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+    int			width;
+    int			height;
 }				t_data;
 
 typedef struct s_keys
@@ -108,23 +110,16 @@ typedef struct s_cube
 {
 	t_keys		keys;
 	t_cub		*cub;
+    t_data        tex_img[4];
 	void		*mlx;
-	void		*tex_mlx;
 	void		*win;
 	void		*img;
-	void 		*tex_img;
 	char		*addr;
-	char 		*tex_addr;
 	int			bits_per_pixel;
-	int 		tex_bits_per_pixel;
 	int			line_length;
-	int 		tex_line_length;
 	int			endian;
-	int 		tex_endian;
 	int			width;
-	int			tex_width;
 	int			height;
-	int			tex_height;
 	float		x;
 	float		y;
 	float 		x_map;
@@ -176,7 +171,7 @@ typedef struct s_dis
 int parse_cub(char *file, t_cub *cub);
 //void    free_cub(t_cub *cub);
 void free_cub_resources(t_cub *cub, t_cube *cube);
-void destroy_cube(t_cube *cube);
+int destroy_cube(int event_code, void *param);
 void   free_splited(char **splited);
 int		empty_line(char *line);
 void	drain_gnl(int fd);
@@ -203,14 +198,13 @@ int not_flood_fill(t_cub *cub);
 void    start_game(t_cube *cube, t_cub *cub);
 
 void			cube_render(t_cube *cube);
-int				close_window(t_cube *cube);
 void			event_init(t_cube *cube);
 void			put_pixel_to_image(int x, int y, int color, t_cube *cube);
 // int				*string_to_array(char **map);
 
-int init_texture(t_cube *cube, char *texture_path);
-int get_texture_color(t_cube *cube, int tex_x, int tex_y);
-void draw_vertical_line(t_cube *cube, int x, float wall_height, int color, float hit_x, float hit_y);
+int load_textures(t_cube *cube);
+int get_texture_color(t_cube *cube, int tex_x, int tex_y, int side);
+void draw_vertical_line(t_cube *cube, t_distance *d, int x, float wall_height, int color, float hit_x, float hit_y);
 
 
 #endif

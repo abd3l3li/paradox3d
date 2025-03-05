@@ -46,7 +46,11 @@ static void	cube_initializing_and_protecting(t_cube *cube, t_cub *cub)
 	}
 	cube->addr = mlx_get_data_addr(cube->img, &cube->bits_per_pixel,
 			&cube->line_length, &cube->endian);
-	init_texture(cube, cub->v_texture->no);
+	if (!load_textures(cube))
+	{
+		write(2, "Error: load_textures\n", 22);
+		destroy_cube(0, cube);
+	}
 	event_init(cube);
 	cube_render(cube);
 }

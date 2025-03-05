@@ -84,19 +84,18 @@ float cast_ray(t_cube *cube, t_distance *d, t_dis *dis, float *hit_x, float *hit
 }
 
 // Updated distance_to_wall function
-float distance_to_wall(t_cube *cube, float angle, float *hit_x, float *hit_y)
+float distance_to_wall(t_cube *cube, t_distance *d, float angle, float *hit_x, float *hit_y)
 {
-    t_distance d;
     static t_dis dis;
     static int row;
 
     find_player_position(cube->cub->v_map, &cube->player_px, &cube->player_py);
     dis.base_x = (cube->player_px * TILE_SIZE) + (TILE_SIZE / 2) + cube->x;
     dis.base_y = (cube->player_py * TILE_SIZE) + (TILE_SIZE / 2) + cube->y;
-    d.ray_x = dis.base_x;
-    d.ray_y = dis.base_y;
-    d.ray_cos = cos(angle);
-    d.ray_sin = sin(angle);
+    d->ray_x = dis.base_x;
+    d->ray_y = dis.base_y;
+    d->ray_cos = cos(angle);
+    d->ray_sin = sin(angle);
     while (cube->cub->v_map->map[dis.map_height])
         dis.map_height++;
     while (row < dis.map_height) // Replace the for loop with a while loop
@@ -108,12 +107,13 @@ float distance_to_wall(t_cube *cube, float angle, float *hit_x, float *hit_y)
             dis.map_width = dis.row_length;
         row++; // Increment row counter
     }
-    return cast_ray(cube, &d, &dis, hit_x, hit_y);
+    return cast_ray(cube, d, &dis, hit_x, hit_y);
 }
 
 void	cube_render(t_cube *cube)
 {
 	t_render	render;
+	t_distance d;
 	float		pi;
 	float		raw_distance;
 	float		diff_angle;
@@ -128,11 +128,11 @@ void	cube_render(t_cube *cube)
 	while (ray < cube->width) // Replace the for loop with a while loop
 	{
 		float hit_x, hit_y;
-		raw_distance = distance_to_wall(cube, render.ray_angle, &hit_x, &hit_y);
+		raw_distance = distance_to_wall(cube, &d, render.ray_angle, &hit_x, &hit_y);
 		diff_angle = render.ray_angle - cube->player_angle;
 		corrected_dist = raw_distance * cos(diff_angle);
 		wall_height = (WALL_HEIGHT / corrected_dist) * (cube->height / 2.0f);
-		draw_vertical_line(cube, ray, wall_height, render.color, hit_x, hit_y);
+		draw_vertical_line(cube, &d, ray, wall_height, render.color, hit_x, hit_y);
 		render.ray_angle += render.angle_step;
 		ray++; // Increment the ray counter
 	}

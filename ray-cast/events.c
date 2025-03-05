@@ -29,19 +29,11 @@ int	is_wall(float x, float y, t_cube *cube)
 	return (0);
 }
 
-int	close_window(t_cube *cube)
-{
-	mlx_destroy_image(cube->mlx, cube->img);
-	mlx_destroy_window(cube->mlx, cube->win);
-	mlx_destroy_display(cube->mlx);
-	free(cube->mlx);
-	exit(0);
-}
 
 int	key_press(int key, t_cube *cube)
 {
 	if (key == 65307)
-		close_window(cube);
+		destroy_cube(0, cube);
 	if (key == W_KEY)
 		cube->keys.w = 1;
 	if (key == S_KEY)
@@ -141,5 +133,5 @@ void	event_init(t_cube *cube)
 	mlx_hook(cube->win, 2, 1L << 0, key_press, cube);
 	mlx_hook(cube->win, 3, 1L << 1, key_release, cube);
 	mlx_loop_hook(cube->mlx, game_loop, cube);
-	mlx_hook(cube->win, 17, 1L << 17, close_window, cube);
+	mlx_hook(cube->win, 17, 1L << 17, destroy_cube, cube);
 }
