@@ -97,9 +97,9 @@ else
 {
     tileCoord = hit_x / (float)TILE_SIZE;
     if (d->ray_sin > 0)
-        side = 2;
-    else
         side = 3;
+    else
+        side = 2;
 }
 float wall_hit = tileCoord - floor(tileCoord); // fraction in [0..1)
 int tex_x = (int)(wall_hit * (float)cube->tex_img[side].width);

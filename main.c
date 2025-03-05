@@ -109,14 +109,14 @@ int main(int ac, char **av)
     cube.player_angle = 0;
     if (ac != 2)
     {
-        printf("Error\n not enough arguments\n");
+        printf("\033[1;31m\033[40m Error\n not enough arguments \033[0m\n");
         return (1);
     } 
     init_cub(&cub, av, &cube);
     cub.fd = open(av[1], O_RDONLY);
     if (cub.fd == -1 )
     {
-        printf("Error\n file not found\n");
+        printf("\033[1;31m\033[40m Error\n file not found \033[0m\n");
         free_cub_resources(&cub, &cube);
         return (1);
     }
