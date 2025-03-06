@@ -28,9 +28,7 @@ int	is_digit(char *str)
 
 int	ft_atoi(char *str)
 {
-	int	(i), (sign), (result);
-
-
+	int (i), (sign), (result);
 	i = 0;
 	sign = 1;
 	result = 0;

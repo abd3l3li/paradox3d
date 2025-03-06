@@ -2,14 +2,14 @@
 
 float    player_facing(t_cube *data)
 {
-    int    i;
+    size_t    i;
     int    j;
 
     j = 0;
     while (j < data->cub->v_map->map_len)
     {
         i = 0;
-        while (i < 31)
+        while (i < ft_strlen(data->cub->v_map->map[j]))
         {
             if (data->cub->v_map->map[j][i] == 'N')
                 return (1.5 * PI);

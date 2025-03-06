@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:06:17 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/05 01:49:59 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:50:11 by abel-baz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,6 @@ typedef struct s_cube
 	float		y;
 	float 		x_map;
 	float 		y_map;
-	int 		map_height;
-	int 		map_width;
 	float		player_angle;
 	float 		player_px;
 	float 		player_py;
@@ -205,6 +203,7 @@ int load_textures(t_cube *cube);
 int get_texture_color(t_cube *cube, int tex_x, int tex_y, int side);
 void draw_vertical_line(t_cube *cube, t_distance *d, int ray, float wall_height, int color, float hit_x, float hit_y);
 float    player_facing(t_cube *data);
+int *ft_map_width(t_cub *cub);
 
 
 #endif

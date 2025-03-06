@@ -38,15 +38,15 @@ int map_alloc(t_cub *cub)
     return (i);
 }
 
-int ft_rowlen(char **map)
-{
-    int i;
+// int ft_rowlen(char **map)
+// {
+//     int i;
 
-    i = 0;
-    while (map[i])
-        i++;
-    return (i);
-}
+//     i = 0;
+//     while (map[i])
+//         i++;
+//     return (i);
+// }
 
 int is_out_of_bounds(t_cub *cub, int i, int j)
 {

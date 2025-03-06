@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abel-baz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 22:24:04 by abel-baz          #+#    #+#             */
-/*   Updated: 2023/11/16 18:14:24 by abel-baz         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:30:21 by abel-baz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*ft_calloc(size_t count, size_t size);
 int		ft_isalnum(int i);
 int		ft_isalpha(int i);
 int		ft_isascii(int i);
-int		ft_isdigit(int  i);
+int		ft_isdigit(int i);
 int		ft_isprint(int i);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);

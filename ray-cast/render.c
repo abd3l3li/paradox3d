@@ -59,7 +59,8 @@ float cast_ray(t_cube *cube, t_distance *d, t_dis *dis, float *hit_x, float *hit
         dis->my = (int)(d->ray_y / TILE_SIZE);
         if (dis->my < 0 || dis->my >= dis->map_height || dis->mx < 0 || dis->mx >= dis->map_width)
             break;
-        if (cube->cub->v_map->map[dis->my][dis->mx] == '1' || cube->cub->v_map->map[dis->my][dis->mx] == ' ')
+        if (cube->cub->v_map->map[dis->my][dis->mx] == '1' || cube->cub->v_map->map[dis->my][dis->mx] == ' ' 
+			|| cube->cub->v_map->map[dis->my][dis->mx] == '\0')
         {
             dis->dx = d->ray_x - dis->base_x;
             dis->dy = d->ray_y - dis->base_y;
