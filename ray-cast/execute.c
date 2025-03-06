@@ -60,8 +60,8 @@ void	start_game(t_cube *cube, t_cub *cub)
 	cube->width = 800;
 	cube->height = 600;
 	cube->pi = PI;
-	cube->cub = cub;
 
 	cube_initializing_and_protecting(cube, cub);
+	
 	mlx_loop(cube->mlx);
 }

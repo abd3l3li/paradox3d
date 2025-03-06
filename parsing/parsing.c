@@ -70,7 +70,11 @@ int parse_cub(char *file, t_cub *cub)
 	while (cub->line)
 	{
 		if(!empty_line(cub->line))
-			return (free(cub->line), -1);
+		{
+			free(cub->line);
+			cub->line = NULL;
+			return (-1);
+		}
 		cub->line = get_next_line(cub->fd);
 	}
 	free(cub->line);//recheck

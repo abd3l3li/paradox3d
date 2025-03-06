@@ -32,10 +32,9 @@
 #define D_KEY 100
 #define ESC_KEY 65307
 #define PI 3.14159265359
-#define ROTATION_SPEED 0.03
+#define ROTATION_SPEED 0.02
 #define MOVE_SPEED 6
 #define FOV 60
-// #define NUM_RAYS 600
 #define WALL_HEIGHT 250
 #define TILE_SIZE 100
 
@@ -204,7 +203,8 @@ void			put_pixel_to_image(int x, int y, int color, t_cube *cube);
 
 int load_textures(t_cube *cube);
 int get_texture_color(t_cube *cube, int tex_x, int tex_y, int side);
-void draw_vertical_line(t_cube *cube, t_distance *d, int x, float wall_height, int color, float hit_x, float hit_y);
+void draw_vertical_line(t_cube *cube, t_distance *d, int ray, float wall_height, int color, float hit_x, float hit_y);
+float    player_facing(t_cube *data);
 
 
 #endif

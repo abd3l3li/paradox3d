@@ -66,7 +66,7 @@ float cast_ray(t_cube *cube, t_distance *d, t_dis *dis, float *hit_x, float *hit
             *hit_x = d->ray_x;
             *hit_y = d->ray_y;
 
-            if ((int)(d->ray_x / TILE_SIZE) != (int)((d->ray_x - d->ray_cos) / TILE_SIZE))
+            if ((int)(d->ray_x / TILE_SIZE) != (int)((d->ray_x - d->ray_cos) / TILE_SIZE)) //why
                 cube->hit_side = 0;
             else
                 cube->hit_side = 1;

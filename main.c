@@ -99,6 +99,8 @@ void    init_cub(t_cub *cub, char **av, t_cube *cube)
     cub->v_map->manner = 4;
     cub->v_map->map_len = map_alloc(cub);
     cub->v_map->manner = 4;
+    cube->player_angle = 0;
+    cube->cub = cub;
 }
 
 int main(int ac, char **av)
@@ -106,7 +108,6 @@ int main(int ac, char **av)
     t_cub   cub;
     t_cube	cube;
 
-    cube.player_angle = 0;
     if (ac != 2)
     {
         printf("\033[1;31m\033[40m Error\n not enough arguments \033[0m\n");

@@ -1,5 +1,31 @@
 #include "../cub.h"
 
+float    player_facing(t_cube *data)
+{
+    int    i;
+    int    j;
+
+    j = 0;
+    while (j < data->cub->v_map->map_len)
+    {
+        i = 0;
+        while (i < 31)
+        {
+            if (data->cub->v_map->map[j][i] == 'N')
+                return (1.5 * PI);
+            else if (data->cub->v_map->map[j][i] == 'S')
+                return (0.5 * PI);
+            else if (data->cub->v_map->map[j][i] == 'E')
+                return (0);
+            else if (data->cub->v_map->map[j][i] == 'W')
+                return (PI);
+            i++;
+        }
+        j++;
+    }
+    return (0);
+}
+
 int load_textures(t_cube *cube)
 {
     // Load the north texture
@@ -49,30 +75,25 @@ int load_textures(t_cube *cube)
 
 int get_texture_color(t_cube *cube, int tex_x, int tex_y, int side)
 {
+    int color;
+
+    color = 0;
     // Ensure the texture image is loaded
     if (cube->tex_img[side].addr == NULL)
-    {
-        fprintf(stderr, "Error: Texture image not loaded.\n");
-        return -1;
-    }
-
-    // Calculate the offset in the texture image
+        destroy_cube(cube);
     int offset = tex_y * cube->tex_img[side].line_length + tex_x * (cube->tex_img[side].bits_per_pixel / 8);
 
     // Ensure the offset is within the bounds of the texture image
     if (offset < 0 || offset >= cube->tex_img[side].line_length * cube->tex_img[side].height)
-    {
-        fprintf(stderr, "Error: Texture coordinates out of bounds.\n");
-        return -1;
-    }
+        destroy_cube(cube);
 
     // Get the color from the texture image
-    int color = *(int *)(cube->tex_img[side].addr + offset);
+    color = *(int *)(cube->tex_img[side].addr + offset);
 
     return color;
 }
 
-void draw_vertical_line(t_cube *cube, t_distance *d, int x, float wall_height,
+void draw_vertical_line(t_cube *cube, t_distance *d, int ray, float wall_height,
     int color, float hit_x, float hit_y)
 {
 // Screen coordinates for where the wall should be drawn
@@ -85,21 +106,21 @@ int side;
 // Compute tex_x by using the fractional position within the tile.
 // (This ensures correct horizontal mapping of the texture.)
 // ----------------------------------------------------------------------
-if (cube->hit_side == 0)
-{
-    tileCoord = hit_y / (float)TILE_SIZE;
-    if (d->ray_cos > 0)
-        side = 0;
-    else
-        side = 1;
-}
-else
+if (cube->hit_side == 1) //v
 {
     tileCoord = hit_x / (float)TILE_SIZE;
-    if (d->ray_sin > 0)
-        side = 3;
+    if (d->ray_sin <= 0)
+        side = 0;//no
     else
-        side = 2;
+        side = 1;//so
+}
+else //h
+{
+    tileCoord = hit_y / (float)TILE_SIZE;
+    if (d->ray_cos <= 0)
+        side = 2;//ea
+    else
+        side = 3;//we
 }
 float wall_hit = tileCoord - floor(tileCoord); // fraction in [0..1)
 int tex_x = (int)(wall_hit * (float)cube->tex_img[side].width);
@@ -116,25 +137,23 @@ while (y < cube->height)
     if (y < start)
     {
     // Ceiling
-        put_pixel_to_image(x, y, cube->ceiling_color, cube);
+        put_pixel_to_image(ray, y, cube->ceiling_color, cube);
     }
     else if (y < end)
     {
 // Wall slice: figure out which row of the texture
-    float tex_y = (float)(y - start) / wall_height * cube->tex_img[side].height;
-    int tex_i = (int)tex_y;
-    if (tex_i < 0) tex_i = 0;
-    if (tex_i >= cube->tex_img[side].height) tex_i = cube->tex_img[side].height - 1;
+    float tex_i = (float)(y - start) / wall_height * cube->tex_img[side].height;
+    int tex_y = (int)tex_i;
+    if (tex_y < 0) tex_y = 0;
+    if (tex_y >= cube->tex_img[side].height) tex_y = cube->tex_img[side].height - 1;
 
-    int tex_color = get_texture_color(cube, tex_x, tex_i, side);
-    if (tex_color == -1)
-    tex_color = 0x03adfc; // Fallback color
-    put_pixel_to_image(x, y, tex_color, cube);
+    int tex_color = get_texture_color(cube, tex_x, tex_y, side);
+    put_pixel_to_image(ray, y, tex_color, cube);
     }
     else
     {
         // Floor
-        put_pixel_to_image(x, y, cube->floor_color, cube);
+        put_pixel_to_image(ray, y, cube->floor_color, cube);
     }
     y++;
 }

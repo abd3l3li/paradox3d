@@ -121,9 +121,7 @@ int	ft_fill_map(t_cub *cub)
         return (-1);
     cub->v_map->map = (char **)malloc(sizeof(char *) * (cub->v_map->map_len + 1));
     if (cub->v_map->map == NULL)
-	{
     	return (-1);
-	}
 	while (i < cub->v_map->map_len)
 	{
 		if (!cub->line)
