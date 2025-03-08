@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:58:15 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/06 17:50:18 by abel-baz         ###   ########.fr       */
+/*   Updated: 2025/03/07 01:08:03 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	is_wall(float x, float y, t_cube *cube)
 		return (1);
 	return (0);
 }
-
 
 int	key_press(int key, t_cube *cube)
 {
@@ -120,21 +119,16 @@ int	game_loop(t_cube *cube)
 	}
 	return (cube_render(cube), 0);
 }
-// int destroy_window(t_cube *cube)
-// {
-// 	destroy_cube(0, cube);
-// 	exit(0);
-// }
+
 void	event_init(t_cube *cube)
 {
-	
 	cube->keys.a = 0;
 	cube->keys.d = 0;
 	cube->keys.w = 0;
 	cube->keys.s = 0;
 	cube->keys.left = 0;
 	cube->keys.right = 0;
-	cube->player_angle = player_facing(cube); //added
+	cube->player_angle = player_facing(cube); // added
 	cube->player_angle += ROTATION_SPEED;
 	mlx_hook(cube->win, 2, 1L << 0, key_press, cube);
 	mlx_hook(cube->win, 3, 1L << 1, key_release, cube);

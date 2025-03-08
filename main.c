@@ -127,10 +127,7 @@ int main(int ac, char **av)
         free_cub_resources(&cub, &cube);
         return (1);
     }
-    // else
-    //     printf("parsing successful\n");
     start_game(&cube, &cub);
-    
     free_cub_resources(&cub, &cube);
     return (0);
 }
