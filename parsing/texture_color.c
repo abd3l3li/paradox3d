@@ -1,17 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   texture_color.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 09:29:22 by her-rehy          #+#    #+#             */
+/*   Updated: 2025/03/08 10:28:58 by her-rehy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub.h"
-
-
-//here we parse the texture line
-
-// int check_splited(char **splited, int num)
-// {
-//     int i = 0;
-//     while (splited[i])
-//         i++;
-//     if (i != num)
-//         return -1;
-//     return 0;
-// }
 
 int holy_checks(t_cub *cub)
 {
@@ -22,6 +21,24 @@ int holy_checks(t_cub *cub)
     if (check_color(cub) == -1)
         return (-1);
     return 0;
+}
+
+static void to_be_continued(t_cub *cub, char **splited, char *type)
+{
+    if (type[0] == 'W' && type[1] == 'E' && type[2] == '\0')
+    {
+        cub->v_texture->we_num++;
+        if (cub->v_texture->we_num == 1)
+            cub->v_texture->we = ft_strdup(splited[1]);
+        cub->flag = 1;
+    }
+    else if (type[0] == 'E' && type[1] == 'A' && type[2] == '\0')
+    {
+        cub->v_texture->ea_num++;
+        if (cub->v_texture->ea_num == 1)
+            cub->v_texture->ea = ft_strdup(splited[1]);
+        cub->flag = 1;
+    }
 }
 
 void parse_texture_line(t_cub *cub, char **splited, char *type)
@@ -40,22 +57,9 @@ void parse_texture_line(t_cub *cub, char **splited, char *type)
             cub->v_texture->so = ft_strdup(splited[1]);
         cub->flag = 1;
     }
-    else if (type[0] == 'W' && type[1] == 'E' && type[2] == '\0')
-    {
-        cub->v_texture->we_num++;
-        if (cub->v_texture->we_num == 1)
-            cub->v_texture->we = ft_strdup(splited[1]);
-        cub->flag = 1;
-    }
-    else if (type[0] == 'E' && type[1] == 'A' && type[2] == '\0')
-    {
-        cub->v_texture->ea_num++;
-        if (cub->v_texture->ea_num == 1)
-            cub->v_texture->ea = ft_strdup(splited[1]);
-        cub->flag = 1;
-    }
+    else
+        to_be_continued(cub, splited, type);
 }
-
 
 int parse_color_line(t_cub *cub, char *line, char *splited)
 {
@@ -94,7 +98,7 @@ static int handle_line(t_cub *cub, char **splited)
     return 0;
 }
 
-int parse_texture_color(t_cub *cub)
+static int process_texture_lines(t_cub *cub)
 {
     char **splited;
 
@@ -112,8 +116,6 @@ int parse_texture_color(t_cub *cub)
         splited = ft_splitt(cub->line, ", \n");
         if (!splited || handle_line(cub, splited) == -1)
         {
-            free(cub->line);
-            cub->line = NULL;  // Set to NULL after freeing
             free_splited(splited);
             return -1;
         }
@@ -121,6 +123,18 @@ int parse_texture_color(t_cub *cub)
         cub->line = NULL;  // Set to NULL after freeing
         free_splited(splited);
         cub->line = get_next_line(cub->fd);
+    }
+    return 0;
+}
+
+int parse_texture_color(t_cub *cub)
+{
+
+    if (process_texture_lines(cub) == -1)
+    {
+        free(cub->line);
+        cub->line = NULL;  // Set to NULL after freeing
+        return -1;
     }
     if (holy_checks(cub) == -1)
     {

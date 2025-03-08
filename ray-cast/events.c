@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:58:15 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 02:26:44 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/08 07:23:28 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	key_release(int key, t_cube *cube)
 
 static void	handle_movement(t_cube *cube, float *new_x, float *new_y)
 {
-	const float	pi = PI;
 
 	if (cube->keys.w)
 	{
@@ -64,13 +63,13 @@ static void	handle_movement(t_cube *cube, float *new_x, float *new_y)
 	}
 	if (cube->keys.a)
 	{
-		*new_x = cube->x + cos(cube->player_angle - pi / 2) * MOVE_SPEED;
-		*new_y = cube->y + sin(cube->player_angle - pi / 2) * MOVE_SPEED;
+		*new_x = cube->x + cos(cube->player_angle - PI / 2) * MOVE_SPEED;
+		*new_y = cube->y + sin(cube->player_angle - PI / 2) * MOVE_SPEED;
 	}
 	if (cube->keys.d)
 	{
-		*new_x = cube->x + cos(cube->player_angle + pi / 2) * MOVE_SPEED;
-		*new_y = cube->y + sin(cube->player_angle + pi / 2) * MOVE_SPEED;
+		*new_x = cube->x + cos(cube->player_angle + PI / 2) * MOVE_SPEED;
+		*new_y = cube->y + sin(cube->player_angle + PI / 2) * MOVE_SPEED;
 	}
 }
 
@@ -86,13 +85,13 @@ int	game_loop(t_cube *cube)
 	{
 		cube->player_angle -= ROTATION_SPEED;
 		if (cube->player_angle < 0)
-			cube->player_angle += 2 * cube->pi;
+			cube->player_angle += 2 * PI;
 	}
 	if (cube->keys.right)
 	{
 		cube->player_angle += ROTATION_SPEED;
-		if (cube->player_angle > 2 * cube->pi)
-			cube->player_angle -= 2 * cube->pi;
+		if (cube->player_angle > 2 * PI)
+			cube->player_angle -= 2 * PI;
 	}
 	handle_movement(cube, &new_x, &new_y);
 	if (!is_wall(new_x, new_y, cube))

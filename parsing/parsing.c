@@ -1,31 +1,33 @@
 #include "../cub.h"
 
-
-void drain_gnl(int fd)
+void	drain_gnl(int fd)
 {
-    char *line;
+	char	*line;
+
 	line = get_next_line(fd);
-    while (line != NULL)
-    {
-        free(line);
+	while (line != NULL)
+	{
+		free(line);
 		line = get_next_line(fd);
-    }
+	}
 }
 
-void free_splited(char **splited)
+void	free_splited(char **splited)
 {
-    int i = 0;
-    while (splited[i])
-    {
-        free(splited[i]);
-        i++;
-    }
-    free(splited);
+	int	i;
+
+	i = 0;
+	while (splited[i])
+	{
+		free(splited[i]);
+		i++;
+	}
+	free(splited);
 }
 
 int	empty_line(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])
@@ -44,20 +46,20 @@ int	empty_line(char *line)
 
 int	extension_check(char *file)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (file[i])
 		i++;
 	if (i < 5)
 		return (-1);
-	if (file[i - 1] != 'b' || file[i - 2] != 'u' 
-		|| file[i - 3] != 'c' || file[i - 4] != '.')
+	if (file[i - 1] != 'b' || file[i - 2] != 'u' || file[i - 3] != 'c' || file[i
+		- 4] != '.')
 		return (-1);
 	return (0);
 }
 
-int parse_cub(char *file, t_cub *cub)
+int	parse_cub(char *file, t_cub *cub)
 {
 	cub->line = get_next_line(cub->fd);
 	if (extension_check(file) == -1)
@@ -66,10 +68,10 @@ int parse_cub(char *file, t_cub *cub)
 		return (-1);
 	if (parse_map(cub) == -1)
 		return (-1);
-	//cub->line = get_next_line(cub->fd);
+	// cub->line = get_next_line(cub->fd);
 	while (cub->line)
 	{
-		if(!empty_line(cub->line))
+		if (!empty_line(cub->line))
 		{
 			free(cub->line);
 			cub->line = NULL;
@@ -77,6 +79,6 @@ int parse_cub(char *file, t_cub *cub)
 		}
 		cub->line = get_next_line(cub->fd);
 	}
-	free(cub->line);//recheck
-    return (0);
+	free(cub->line); // recheck
+	return (0);
 }

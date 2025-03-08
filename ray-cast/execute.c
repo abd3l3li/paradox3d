@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:57:28 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 02:27:28 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/08 07:21:59 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	start_game(t_cube *cube, t_cub *cub)
 {
 	cube->width = 800;
 	cube->height = 600;
-	cube->pi = PI;
 	cube_init(cube, cub);
 	mlx_loop(cube->mlx);
 }

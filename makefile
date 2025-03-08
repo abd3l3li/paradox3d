@@ -11,7 +11,7 @@ LIBFTDIR = libft
 LIBFT = libft/libft.a
 SRC = main.c parsing/parsing.c parsing/texture_color.c parsing/tools.c parsing/parse_map.c \
 		gnl/get_next_line.c gnl/get_next_line_utils.c texturing/texture.c \
-		ray-cast/execute.c ray-cast/render.c ray-cast/events.c \
+		ray-cast/execute.c ray-cast/render.c ray-cast/events.c texturing/texture2.c \
 
 OBJ = $(SRC:.c=.o)
 

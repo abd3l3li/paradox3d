@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:54:24 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 02:42:53 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/08 06:32:02 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,7 @@ void	cube_render(t_cube *cube)
 		render.corrected_dist = render.raw_distance * cos(render.diff_angle);
 		render.wall_height = (WALL_HEIGHT / render.corrected_dist)
 			* (cube->height / 2.0f);
-		draw_vertical_line(cube, &d, render.ray, render.wall_height,
-			render.color, render.hit_x, render.hit_y);
+		draw_vertical_line(cube, &d, &render);
 		render.ray_angle += render.angle_step;
 		render.ray++;
 	}

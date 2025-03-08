@@ -6,7 +6,7 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:06:17 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 03:28:05 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/08 06:34:19 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,17 +158,17 @@ typedef struct s_distance
 
 typedef struct s_draw_data
 {
-    int     start;
-    int     end;
-    float   tilecoord;
-    int     side;
-    int     tex_x;
-    int     y;
-    float   tex_i;
-    int     tex_y;
-    int     tex_color;
-    float   wall_hit;
-} t_draw_data;
+	int			start;
+	int			end;
+	float		tilecoord;
+	int			side;
+	int			tex_x;
+	int			y;
+	float		tex_i;
+	int			tex_y;
+	int			tex_color;
+	float		wall_hit;
+}				t_draw_data;
 
 typedef struct s_dis
 {
@@ -219,9 +219,7 @@ void			put_pixel_to_image(int x, int y, int color, t_cube *cube);
 
 int				load_textures(t_cube *cube);
 int				get_texture_color(t_cube *cube, int tex_x, int tex_y, int side);
-void			draw_vertical_line(t_cube *cube, t_distance *d, int ray,
-					float wall_height, int color, float hit_x, float hit_y);
+void			draw_vertical_line(t_cube *cube, t_distance *d, t_render *rend);
 float			player_facing(t_cube *data);
 int				*ft_map_width(t_cub *cub);
-
 #endif
