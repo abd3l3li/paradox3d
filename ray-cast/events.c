@@ -6,28 +6,11 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:58:15 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/07 01:08:03 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/08 02:26:44 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
-
-int	is_wall(float x, float y, t_cube *cube)
-{
-	float	buffer;
-
-	buffer = 0.2;
-	cube->player_px += x / TILE_SIZE;
-	cube->player_py += y / TILE_SIZE;
-	cube->player_py += 0.7;
-	cube->player_px += 0.7;
-	if (cube->cub->v_map->map[(int)(cube->player_py
-			- buffer)][(int)(cube->player_px - buffer)] == '1'
-		|| cube->cub->v_map->map[(int)(cube->player_py
-			- buffer)][(int)(cube->player_px - buffer)] == ' ')
-		return (1);
-	return (0);
-}
 
 int	key_press(int key, t_cube *cube)
 {
@@ -128,7 +111,7 @@ void	event_init(t_cube *cube)
 	cube->keys.s = 0;
 	cube->keys.left = 0;
 	cube->keys.right = 0;
-	cube->player_angle = player_facing(cube); // added
+	cube->player_angle = player_facing(cube);
 	cube->player_angle += ROTATION_SPEED;
 	mlx_hook(cube->win, 2, 1L << 0, key_press, cube);
 	mlx_hook(cube->win, 3, 1L << 1, key_release, cube);

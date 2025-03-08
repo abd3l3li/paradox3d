@@ -6,13 +6,42 @@
 /*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:57:28 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 02:15:18 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/08 02:27:28 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 #include <stdlib.h>
 #include <string.h>
+
+int	is_wall(float x, float y, t_cube *cube)
+{
+	float	buffer;
+
+	buffer = 0.2;
+	cube->player_px += x / TILE_SIZE;
+	cube->player_py += y / TILE_SIZE;
+	cube->player_py += 0.7;
+	cube->player_px += 0.7;
+	if (cube->cub->v_map->map[(int)(cube->player_py
+			- buffer)][(int)(cube->player_px - buffer)] == '1'
+		|| cube->cub->v_map->map[(int)(cube->player_py
+			- buffer)][(int)(cube->player_px - buffer)] == ' ')
+		return (1);
+	return (0);
+}
+
+void	put_pixel_to_image(int x, int y, int color, t_cube *cube)
+{
+	char	*dst;
+
+	if (x >= 0 && x < cube->width && y >= 0 && y < cube->height)
+	{
+		dst = cube->addr + (y * cube->line_length + x * (cube->bits_per_pixel
+					/ 8));
+		*(unsigned int *)dst = color;
+	}
+}
 
 int	ft_rgb_to_hex(int r, int g, int b)
 {
