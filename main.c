@@ -47,37 +47,40 @@ void	free_cub_io(t_cub *cub)
 	if (cub->fd > 0)
 		close(cub->fd);
 }
-static void free_cub_core(t_cub *cub)
+static void	free_cub_core(t_cub *cub)
 {
-    int i = 0;
+	int	i;
 
-    if (cub->v_texture) {
-        free(cub->v_texture->no);
-        free(cub->v_texture->so);
-        free(cub->v_texture->we);
-        free(cub->v_texture->ea);
-        free(cub->v_texture);
-    }
-    free(cub->v_color);
-    if (cub->v_map) {
-        if (cub->v_map->map) {
-            while (cub->v_map->map[i])
-                free(cub->v_map->map[i++]);
-            free(cub->v_map->map);
-        }
-        free(cub->v_map);
-    }
+	i = 0;
+	if (cub->v_texture)
+	{
+		free(cub->v_texture->no);
+		free(cub->v_texture->so);
+		free(cub->v_texture->we);
+		free(cub->v_texture->ea);
+		free(cub->v_texture);
+	}
+	free(cub->v_color);
+	if (cub->v_map)
+	{
+		if (cub->v_map->map)
+		{
+			while (cub->v_map->map[i])
+				free(cub->v_map->map[i++]);
+			free(cub->v_map->map);
+		}
+		free(cub->v_map);
+	}
 }
 
-void free_cub_resources(t_cub *cub, t_cube *cube)
+void	free_cub_resources(t_cub *cub, t_cube *cube)
 {
-    free_cub_core(cub);
-    
-    free(cub->line);
-    free(cub->str);
-    drain_gnl(cub->fd);
-    if (cub->fd > 0)
-        close(cub->fd);
+	free_cub_core(cub);
+	free(cub->line);
+	free(cub->str);
+	drain_gnl(cub->fd);
+	if (cub->fd > 0)
+		close(cub->fd);
 }
 
 void	init_cub(t_cub *cub, char **av, t_cube *cube)

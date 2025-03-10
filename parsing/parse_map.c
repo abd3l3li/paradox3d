@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 11:32:57 by her-rehy          #+#    #+#             */
+/*   Updated: 2025/03/08 11:32:58 by her-rehy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub.h"
 
 int	is_map(char *line, t_cub *cub)
@@ -6,9 +18,9 @@ int	is_map(char *line, t_cub *cub)
 
 	tmp = ft_strtrim(line, " ");
 	if (tmp[0] == '\0')
-		return (0);             // recheck
+		return (0); // recheck
 	if (cub->v_map->manner > 0)
-		// for making sure we skipped the first 4 texture lines
+	// for making sure we skipped the first 4 texture lines
 	{
 		if (tmp[0] == 'W' || tmp[0] == 'E' || tmp[0] == 'S' || tmp[0] == 'N')
 			return (free(tmp), cub->v_map->manner--, 0);
