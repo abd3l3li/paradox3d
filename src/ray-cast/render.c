@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:54:24 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/11 00:20:59 by abel-baz         ###   ########.fr       */
+/*   Updated: 2025/03/11 09:39:19 by her-rehy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,6 @@ float	cast_ray(t_cube *cube, t_distance *d, t_dis *dis, t_render *rend)
 	{
 		dis->mx = (int)(d->ray_x / TILE_SIZE);
 		dis->my = (int)(d->ray_y / TILE_SIZE);
-		if (dis->my < 0 || dis->my >= dis->map_height || dis->mx < 0
-			|| dis->mx >= dis->map_width)
-			break ;
 		if (check_collision(cube, d, dis, rend))
 			return (sqrtf(dis->dx * dis->dx + dis->dy * dis->dy));
 		d->ray_x += d->ray_cos;
@@ -80,7 +77,6 @@ float	distance_to_wall(t_cube *cube, t_distance *d, float angle,
 		t_render *rend)
 {
 	static t_dis	dis;
-	static int		row;
 
 	find_player_position(cube->cub->v_map, &cube->player_px, &cube->player_py);
 	dis.base_x = (cube->player_px * TILE_SIZE) + (TILE_SIZE / 2) + cube->x;
@@ -89,17 +85,6 @@ float	distance_to_wall(t_cube *cube, t_distance *d, float angle,
 	d->ray_y = dis.base_y;
 	d->ray_cos = cos(angle);
 	d->ray_sin = sin(angle);
-	while (cube->cub->v_map->map[dis.map_height])
-		dis.map_height++;
-	while (row < dis.map_height)
-	{
-		dis.row_length = 0;
-		while (cube->cub->v_map->map[row][dis.row_length])
-			dis.row_length++;
-		if (dis.row_length > dis.map_width)
-			dis.map_width = dis.row_length;
-		row++;
-	}
 	return (cast_ray(cube, d, &dis, rend));
 }
 
@@ -107,10 +92,12 @@ void	cube_render(t_cube *cube)
 {
 	t_render	render;
 	t_distance	d;
+	float		fov_rad;
 
 	render.ray = 0;
-	render.angle_step = (FOV * PI / 180.0f) / cube->width;
-	render.ray_angle = cube->player_angle - (FOV * PI / 180.0f) / 2;
+	fov_rad = FOV * PI / 180.0f;
+	render.angle_step = fov_rad / cube->width;
+	render.ray_angle = cube->player_angle - fov_rad / 2;
 	while (render.ray < cube->width)
 	{
 		render.raw_distance = distance_to_wall(cube, &d, render.ray_angle,
