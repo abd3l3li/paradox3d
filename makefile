@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = cc
-CFLAGS = -g #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 MLX_FLAGS = -lmlx -lXext -lX11 -lm
 BOLD      = \033[1m
@@ -9,9 +9,9 @@ CCYAN     = \033[36m
 
 LIBFTDIR = libft
 LIBFT = libft/libft.a
-SRC = main.c parsing/parsing.c parsing/texture_color.c parsing/tools.c parsing/parse_map.c \
-		gnl/get_next_line.c gnl/get_next_line_utils.c texturing/texture.c \
-		ray-cast/execute.c ray-cast/render.c ray-cast/events.c texturing/texture2.c \
+SRC = src/main.c src/parsing/parsing.c src/parsing/texture_color.c src/parsing/tools.c src/parsing/parse_map.c \
+		gnl/get_next_line.c gnl/get_next_line_utils.c src/texturing/texture.c src/parsing/moreTools.c \
+		src/ray-cast/execute.c src/ray-cast/render.c src/ray-cast/events.c src/texturing/utils.c \
 
 OBJ = $(SRC:.c=.o)
 

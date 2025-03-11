@@ -1,7 +1,7 @@
-NO ./texture/minecraft.xpm
-SO ./texture/minecraft.xpm
-EA ./texture/minecraft.xpm
-WE ./texture/minecraft.xpm
+NO ./textures/minecraft.xpm
+SO ./textures/minecraft.xpm
+EA ./textures/minecraft.xpm
+WE ./textures/minecraft.xpm
 
 C 75, 0, 130
 F 128, 128, 128 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:58:15 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 07:23:28 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/11 00:18:17 by abel-baz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	key_release(int key, t_cube *cube)
 
 static void	handle_movement(t_cube *cube, float *new_x, float *new_y)
 {
-
 	if (cube->keys.w)
 	{
 		*new_x = cube->x + cos(cube->player_angle) * MOVE_SPEED;
@@ -77,7 +76,6 @@ int	game_loop(t_cube *cube)
 {
 	float	new_x;
 	float	new_y;
-	float	pi;
 
 	new_x = cube->x;
 	new_y = cube->y;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 08:48:14 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 10:47:43 by her-rehy         ###   ########.fr       */
+/*   Created: 2025/03/10 22:48:17 by abel-baz          #+#    #+#             */
+/*   Updated: 2025/03/11 00:17:09 by abel-baz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	destroy_cube(void *param)
 	int		i;
 	t_cube	*cube;
 
-	cube = (t_cube *)param;
 	i = 0;
+	cube = (t_cube *)param;
 	if (cube->mlx)
 	{
 		if (cube->img)
@@ -36,7 +36,6 @@ int	destroy_cube(void *param)
 	}
 	free_cub_resources(cube->cub, cube);
 	exit(0);
-	return (0);
 }
 
 void	free_cub_io(t_cub *cub)
@@ -47,6 +46,7 @@ void	free_cub_io(t_cub *cub)
 	if (cub->fd > 0)
 		close(cub->fd);
 }
+
 static void	free_cub_core(t_cub *cub)
 {
 	int	i;
@@ -66,7 +66,10 @@ static void	free_cub_core(t_cub *cub)
 		if (cub->v_map->map)
 		{
 			while (cub->v_map->map[i])
-				free(cub->v_map->map[i++]);
+			{
+				free(cub->v_map->map[i]);
+				i++;
+			}
 			free(cub->v_map->map);
 		}
 		free(cub->v_map);
@@ -75,38 +78,13 @@ static void	free_cub_core(t_cub *cub)
 
 void	free_cub_resources(t_cub *cub, t_cube *cube)
 {
+	(void)cube;
 	free_cub_core(cub);
 	free(cub->line);
 	free(cub->str);
 	drain_gnl(cub->fd);
 	if (cub->fd > 0)
 		close(cub->fd);
-}
-
-void	init_cub(t_cub *cub, char **av, t_cube *cube)
-{
-	cub->v_texture = ft_calloc(1, sizeof(t_texture));
-	if (!cub->v_texture)
-	{
-		free_cub_resources(cub, cube);
-		return ; // clean up function
-	}
-	cub->v_color = ft_calloc(1, sizeof(t_color));
-	cub->v_map = ft_calloc(1, sizeof(t_map));
-	if (!cub->v_color || !cub->v_map)
-	{
-		free_cub_resources(cub, cube);
-		return ; // clean up function
-	}
-	cub->v_map->argv = av[1];
-	cub->str = NULL;
-	cub->fd = 0;
-	cub->flag = 0;
-	cub->line = NULL;
-	cub->v_map->map_len = map_alloc(cub);
-	cub->v_map->manner = 4;
-	cube->player_angle = 0;
-	cube->cub = cub;
 }
 
 int	main(int ac, char **av)

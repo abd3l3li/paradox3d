@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   texture_color.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 09:29:22 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 10:28:58 by her-rehy         ###   ########.fr       */
+/*   Created: 2025/03/10 22:49:08 by abel-baz          #+#    #+#             */
+/*   Updated: 2025/03/10 23:48:09 by abel-baz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
-
-int	holy_checks(t_cub *cub)
-{
-	if (check_texture_counts(cub) == -1 || check_textures(cub) == -1)
-		return (-1);
-	if (cub->v_color->f_num != 1 || cub->v_color->c_num != 1)
-		return (-1);
-	if (check_color(cub) == -1)
-		return (-1);
-	return (0);
-}
 
 static void	to_be_continued(t_cub *cub, char **splited, char *type)
 {
@@ -70,7 +59,6 @@ int	parse_color_line(t_cub *cub, char *line, char *splited)
 			return (-1);
 		if (get_rgb(line, cub) == -1)
 			return (-1);
-		// cub->flag = 2;
 	}
 	else if (splited[0] == 'C' && splited[1] == '\0')
 	{
@@ -79,24 +67,7 @@ int	parse_color_line(t_cub *cub, char *line, char *splited)
 			return (-1);
 		if (get_rgb(line, cub) == -1)
 			return (-1);
-		// cub->flag = 2;
 	}
-	return (0);
-}
-
-static int	handle_line(t_cub *cub, char **splited)
-{
-	int	i;
-
-	i = 0;
-	cub->flag = 0;
-	while (splited[i])
-		i++;
-	parse_texture_line(cub, splited, splited[0]);
-	if (parse_color_line(cub, cub->line, splited[0]) == -1)
-		return (-1);
-	if (cub->flag == 1 && i != 2)
-		return (-1);
 	return (0);
 }
 
@@ -111,7 +82,7 @@ static int	process_texture_lines(t_cub *cub)
 		if (empty_line(cub->line))
 		{
 			free(cub->line);
-			cub->line = NULL; // Set to NULL after freeing
+			cub->line = NULL;
 			cub->line = get_next_line(cub->fd);
 			continue ;
 		}
@@ -122,7 +93,7 @@ static int	process_texture_lines(t_cub *cub)
 			return (-1);
 		}
 		free(cub->line);
-		cub->line = NULL; // Set to NULL after freeing
+		cub->line = NULL;
 		free_splited(splited);
 		cub->line = get_next_line(cub->fd);
 	}
@@ -134,13 +105,13 @@ int	parse_texture_color(t_cub *cub)
 	if (process_texture_lines(cub) == -1)
 	{
 		free(cub->line);
-		cub->line = NULL; // Set to NULL after freeing
+		cub->line = NULL;
 		return (-1);
 	}
 	if (holy_checks(cub) == -1)
 	{
 		free(cub->line);
-		cub->line = NULL; // Set to NULL after freeing
+		cub->line = NULL;
 		return (-1);
 	}
 	return (0);

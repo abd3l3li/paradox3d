@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:57:28 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 07:21:59 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/11 00:21:03 by abel-baz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
-#include <stdlib.h>
-#include <string.h>
 
 int	is_wall(float x, float y, t_cube *cube)
 {

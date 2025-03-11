@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:06:17 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 06:34:19 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/11 00:38:22 by abel-baz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
 # define CUB_H
 
-# include "gnl/get_next_line.h"
-# include "libft/libft.h"
+# include "../gnl/get_next_line.h"
+# include "../libft/libft.h"
 # include <fcntl.h>
 # include <math.h>
 # include <mlx.h>
@@ -136,7 +136,6 @@ typedef struct s_render
 	float		angle_step;
 	float		wall_height;
 	float		ray_angle;
-	int			color;
 	float		raw_distance;
 	float		diff_angle;
 	float		corrected_dist;
@@ -183,8 +182,8 @@ typedef struct s_dis
 	float		dy;
 }				t_dis;
 
+void			init_cub(t_cub *cub, char **av, t_cube *cube);
 int				parse_cub(char *file, t_cub *cub);
-// void    free_cub(t_cub *cub);
 void			free_cub_resources(t_cub *cub, t_cube *cube);
 int				destroy_cube(void *param);
 void			free_splited(char **splited);
@@ -202,12 +201,12 @@ int				check_texture_counts(t_cub *cub);
 int				get_rgb(char *line, t_cub *cub);
 int				check_color(t_cub *cub);
 int				count_sep(char *line, char c);
+int				handle_line(t_cub *cub, char **splited);
 
 int				parse_map(t_cub *cub);
 int				check_elems(t_cub *cub);
 int				ft_fill_map(t_cub *cub);
 int				map_alloc(t_cub *cub);
-int				ft_rowlen(char **map);
 int				is_map(char *line, t_cub *cub);
 int				not_flood_fill(t_cub *cub);
 void			start_game(t_cube *cube, t_cub *cub);
@@ -215,11 +214,10 @@ int				is_wall(float x, float y, t_cube *cube);
 void			cube_render(t_cube *cube);
 void			event_init(t_cube *cube);
 void			put_pixel_to_image(int x, int y, int color, t_cube *cube);
-// int				*string_to_array(char **map);
 
 int				load_textures(t_cube *cube);
 int				get_texture_color(t_cube *cube, int tex_x, int tex_y, int side);
 void			draw_vertical_line(t_cube *cube, t_distance *d, t_render *rend);
 float			player_facing(t_cube *data);
-int				*ft_map_width(t_cub *cub);
+
 #endif

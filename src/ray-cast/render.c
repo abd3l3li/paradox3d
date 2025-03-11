@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 09:54:24 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 06:32:02 by her-rehy         ###   ########.fr       */
+/*   Updated: 2025/03/11 00:20:59 by abel-baz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
-#include <stdlib.h>
-#include <string.h>
 
 static void	find_player_position(t_map *v_map, float *player_x, float *player_y)
 {
@@ -38,8 +36,6 @@ static void	find_player_position(t_map *v_map, float *player_x, float *player_y)
 	}
 }
 
-// New function to handle the raycasting logic
-// New function to handle the collision check
 int	check_collision(t_cube *cube, t_distance *d, t_dis *dis, t_render *rend)
 {
 	if (cube->cub->v_map->map[dis->my][dis->mx] == '1'
@@ -60,7 +56,6 @@ int	check_collision(t_cube *cube, t_distance *d, t_dis *dis, t_render *rend)
 	return (0);
 }
 
-// Updated cast_ray function
 float	cast_ray(t_cube *cube, t_distance *d, t_dis *dis, t_render *rend)
 {
 	while (1)
@@ -74,7 +69,6 @@ float	cast_ray(t_cube *cube, t_distance *d, t_dis *dis, t_render *rend)
 			return (sqrtf(dis->dx * dis->dx + dis->dy * dis->dy));
 		d->ray_x += d->ray_cos;
 		d->ray_y += d->ray_sin;
-		d->distance;
 	}
 	rend->hit_x = d->ray_x;
 	rend->hit_y = d->ray_y;
@@ -82,7 +76,6 @@ float	cast_ray(t_cube *cube, t_distance *d, t_dis *dis, t_render *rend)
 	return (0);
 }
 
-// Updated distance_to_wall function
 float	distance_to_wall(t_cube *cube, t_distance *d, float angle,
 		t_render *rend)
 {
@@ -118,7 +111,6 @@ void	cube_render(t_cube *cube)
 	render.ray = 0;
 	render.angle_step = (FOV * PI / 180.0f) / cube->width;
 	render.ray_angle = cube->player_angle - (FOV * PI / 180.0f) / 2;
-	render.color = 0x4682B4;
 	while (render.ray < cube->width)
 	{
 		render.raw_distance = distance_to_wall(cube, &d, render.ray_angle,

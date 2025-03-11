@@ -3,53 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 11:32:57 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 11:32:58 by her-rehy         ###   ########.fr       */
+/*   Created: 2025/03/10 22:48:42 by abel-baz          #+#    #+#             */
+/*   Updated: 2025/03/11 00:13:49 by abel-baz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
-
-int	is_map(char *line, t_cub *cub)
-{
-	char	*tmp;
-
-	tmp = ft_strtrim(line, " ");
-	if (tmp[0] == '\0')
-		return (0); // recheck
-	if (cub->v_map->manner > 0)
-	// for making sure we skipped the first 4 texture lines
-	{
-		if (tmp[0] == 'W' || tmp[0] == 'E' || tmp[0] == 'S' || tmp[0] == 'N')
-			return (free(tmp), cub->v_map->manner--, 0);
-	}
-	if (tmp[0] == '1' || tmp[0] == '0' || tmp[0] == 'W' || tmp[0] == 'E'
-		|| tmp[0] == 'S' || tmp[0] == 'N')
-		return (free(tmp), 1);
-	return (free(tmp), 0);
-}
-
-int	map_alloc(t_cub *cub)
-{
-	int		fd;
-	char	*line;
-	int		i;
-
-	i = 0;
-	fd = open(cub->v_map->argv, O_RDONLY);
-	if (fd == -1)
-		return (-1);
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		if (is_map(line, cub))
-			i++;
-		free(line);
-	}
-	close(fd);
-	return (i);
-}
 
 int	is_out_of_bounds(t_cub *cub, int i, int j)
 {
@@ -77,7 +38,7 @@ int	not_flood_fill(t_cub *cub)
 				|| cub->v_map->map[i][j] == 'N')
 			{
 				if (is_out_of_bounds(cub, i, j) == -1 || cub->v_map->map[i
-					- 1][j] == ' ' || cub->v_map->map[i + 1][j] == ' '
+						- 1][j] == ' ' || cub->v_map->map[i + 1][j] == ' '
 					|| cub->v_map->map[i][j - 1] == ' ' || cub->v_map->map[i][j
 					+ 1] == ' ')
 					return (-1);
@@ -124,8 +85,6 @@ int	ft_fill_map(t_cub *cub)
 	i = 0;
 	if (cub->v_map->map_len == -1)
 		return (-1);
-	cub->v_map->map = (char **)malloc(sizeof(char *) * (cub->v_map->map_len
-				+ 1));
 	if (cub->v_map->map == NULL)
 		return (-1);
 	while (i < cub->v_map->map_len)
@@ -150,6 +109,6 @@ int	parse_map(t_cub *cub)
 	if (state != -1)
 		state = check_elems(cub);
 	if (state != -1)
-		state = not_flood_fill(cub); // here
+		state = not_flood_fill(cub);
 	return (state);
 }

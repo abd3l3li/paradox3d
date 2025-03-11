@@ -1,7 +1,7 @@
-NO ./texture/no_wall.xpm
-SO ./texture/so_wall.xpm
-
-WE ./texture/we_wall.xpm
+NO ./textures/no_wall.xpm
+SO ./textures/so_wall.xpm
+EA ./textures/ea_wall.xpm
+WE ./textures/we_wall.xpm
 
 C 72, 61, 139
 F 106, 113, 57

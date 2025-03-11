@@ -1,16 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture2.c                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: her-rehy <her-rehy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 06:30:49 by her-rehy          #+#    #+#             */
-/*   Updated: 2025/03/08 06:31:18 by her-rehy         ###   ########.fr       */
+/*   Created: 2025/03/10 22:50:37 by abel-baz          #+#    #+#             */
+/*   Updated: 2025/03/11 00:12:57 by abel-baz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
+
+void	init_cub(t_cub *cub, char **av, t_cube *cube)
+{
+	cub->v_texture = ft_calloc(1, sizeof(t_texture));
+	cub->v_color = ft_calloc(1, sizeof(t_color));
+	cub->v_map = ft_calloc(1, sizeof(t_map));
+	if (!cub->v_color || !cub->v_map || !cub->v_texture)
+	{
+		free_cub_resources(cub, cube);
+		return ;
+	}
+	cub->v_map->argv = av[1];
+	cub->str = NULL;
+	cub->fd = 0;
+	cub->flag = 0;
+	cub->line = NULL;
+	cub->v_map->map_len = map_alloc(cub);
+	if (cub->v_map->map_len == -1)
+		return ;
+	cub->v_map->map = ft_calloc(cub->v_map->map_len + 1, sizeof(char *));
+	cub->v_map->manner = 4;
+	cube->player_angle = 0;
+	cube->cub = cub;
+}
 
 float	player_facing(t_cube *data)
 {

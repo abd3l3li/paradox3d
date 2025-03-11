@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abel-baz <abel-baz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 22:48:53 by abel-baz          #+#    #+#             */
+/*   Updated: 2025/03/10 23:40:54 by abel-baz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub.h"
 
 void	drain_gnl(int fd)
@@ -54,7 +66,7 @@ int	extension_check(char *file)
 	if (i < 5)
 		return (-1);
 	if (file[i - 1] != 'b' || file[i - 2] != 'u' || file[i - 3] != 'c' || file[i
-		- 4] != '.')
+			- 4] != '.')
 		return (-1);
 	return (0);
 }
@@ -68,7 +80,6 @@ int	parse_cub(char *file, t_cub *cub)
 		return (-1);
 	if (parse_map(cub) == -1)
 		return (-1);
-	// cub->line = get_next_line(cub->fd);
 	while (cub->line)
 	{
 		if (!empty_line(cub->line))
@@ -79,6 +90,6 @@ int	parse_cub(char *file, t_cub *cub)
 		}
 		cub->line = get_next_line(cub->fd);
 	}
-	free(cub->line); // recheck
+	free(cub->line);
 	return (0);
 }
