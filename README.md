@@ -3,6 +3,8 @@
 paradox3d is a simple 3D rendering project based on raycasting, inspired by early FPS games like Wolfenstein 3D.
 The goal is to simulate a 3D environment from a 2D map using C and basic graphics concepts.
 
+![.cub](https://github.com/user-attachments/assets/ee693c88-a2df-4c66-8827-a2084c472663)
+
 ## Features
 - Real-time 3D projection using raycasting
 - Textured walls
