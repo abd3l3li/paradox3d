@@ -23,9 +23,10 @@ The map is defined in a .cub file and includes:
 - Floor and ceiling colors
 
 ## Compilation & Run
+```
 make
 ./paradox3d maps/midnight_map.cub
-
+```
 ## Project Goal
 This project focuses on:
 - Understanding raycasting
