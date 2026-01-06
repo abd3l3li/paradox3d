@@ -24,7 +24,7 @@ The map is defined in a .cub file and includes:
 
 ## Compilation & Run
 make
-./paradox3d maps/example.cub
+./paradox3d maps/midnight_map.cub
 
 ## Project Goal
 This project focuses on:
